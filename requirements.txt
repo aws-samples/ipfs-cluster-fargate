@@ -1,0 +1,5 @@
+boto3==1.24.94
+python-dotenv==0.21.0
+botocore==1.27.94
+aws-cdk-lib==2.46.0
+constructs>=10.0.0,<11.0.0
