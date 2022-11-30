@@ -21,7 +21,13 @@ Set `ONE_ZONE_EFS=False` in `ipfscluster.env`
 npm install -g aws-cdk
 ```
 
+If it's your first time using CDK follow the instruction in the documentation to setup your environment.
+
 ## Prepare CDK Environment
+
+Make sure `pythons3` and `pip` are installed on your computer.
+
+Run `pip install -r requirements.txt` to install all the current dependencies.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
@@ -115,7 +121,6 @@ Outputs:
 IpfsClusterFargateStack.IpfsClusterEndpoint = dg2xxxxxxxxxx.cloudfront.net
 IpfsClusterFargateStack.IpfsGatewayEndpoint = d2xxxxxxxxxxx.cloudfront.net
 ```
-
 
 
 ### List all IPFS peers
