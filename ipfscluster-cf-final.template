@@ -457,48 +457,6 @@ Metadata:
       z: 0
       embeds: []
 Resources:
-  ECSS3:
-    Type: 'AWS::ECS::Service'
-    Properties:
-      ServiceName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
-          - ipfs-node
-          - !Ref AvailabilityZone3
-      Cluster: !Ref ECSCIPFS
-      TaskDefinition: !Ref ECSTD3
-      LaunchType: FARGATE
-      DesiredCount: 1
-      HealthCheckGracePeriodSeconds: 10
-      LoadBalancers:
-        - ContainerName: ipfs
-          ContainerPort: 8080
-          TargetGroupArn: !Ref ELBV2TGIPFSPEERSWEB
-        - ContainerName: ipfs-cluster
-          ContainerPort: 9094
-          TargetGroupArn: !Ref ELBV2TGIPFSPEERSAPI
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          SecurityGroups:
-            - !Ref EC2SGECS
-          Subnets:
-            - !Ref PublicSubnet3
-      DeploymentConfiguration:
-        MaximumPercent: 100
-        MinimumHealthyPercent: 0
-      ServiceRegistries:
-        - RegistryArn: !GetAtt SDS3.Arn
-    Metadata:
-      'AWS::CloudFormation::Designer':
-        id: fedc51bf-9a72-42a2-9272-453289343f3d
-    DependsOn:
-      - EFSMT3
-      - ELBV2LISTENERWEB
-      - ECSS1
-      - EFSAP3
-      - EFSFS3
-      - ELBV2LISTENERAPI
   EC2SGEFS:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -572,6 +530,7 @@ Resources:
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone1
       Encrypted: true
+      ThroughputMode: elastic
       FileSystemTags:
         - Key: Name
           Value: !Join 
@@ -587,6 +546,7 @@ Resources:
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone2
       Encrypted: true
+      ThroughputMode: elastic
       FileSystemTags:
         - Key: Name
           Value: !Join 
@@ -602,6 +562,7 @@ Resources:
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone3
       Encrypted: true
+      ThroughputMode: elastic
       FileSystemTags:
         - Key: Name
           Value: !Join 
@@ -810,6 +771,16 @@ Resources:
                   - !Ref AvailabilityZone1
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: ipfs-cluster
+          HealthCheck:
+            Command:
+              - CMD-SHELL
+              - !Join 
+                  - ' '
+                  - - /usr/local/bin/ipfs-cluster-ctl
+                    - --force-http
+                    - --basic-auth
+                    - !Ref SSMPCLUSTERBASICAUTH
+                    - '|| exit 1'
     Metadata:
       'AWS::CloudFormation::Designer':
         id: 783256d9-83c7-40da-8041-8c76eb90a943
@@ -932,6 +903,16 @@ Resources:
                   - !Ref AvailabilityZone2
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: ipfs-cluster
+          HealthCheck:
+            Command:
+              - CMD-SHELL
+              - !Join 
+                  - ' '
+                  - - /usr/local/bin/ipfs-cluster-ctl
+                    - --force-http
+                    - --basic-auth
+                    - !Ref SSMPCLUSTERBASICAUTH
+                    - '|| exit 1'
     Metadata:
       'AWS::CloudFormation::Designer':
         id: b886db16-5df0-474f-9c8a-624fe1c40032
@@ -1054,6 +1035,16 @@ Resources:
                   - !Ref AvailabilityZone3
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: ipfs-cluster
+          HealthCheck:
+            Command:
+              - CMD-SHELL
+              - !Join 
+                  - ' '
+                  - - /usr/local/bin/ipfs-cluster-ctl
+                    - --force-http
+                    - --basic-auth
+                    - !Ref SSMPCLUSTERBASICAUTH
+                    - '|| exit 1'
     Metadata:
       'AWS::CloudFormation::Designer':
         id: f3038330-12d6-49cf-ab47-8bc136a6f79e
@@ -1072,6 +1063,7 @@ Resources:
       TaskDefinition: !Ref ECSTD1
       LaunchType: FARGATE
       DesiredCount: 1
+      EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 10
       LoadBalancers:
         - ContainerName: ipfs
@@ -1126,6 +1118,7 @@ Resources:
       TaskDefinition: !Ref ECSTD2
       LaunchType: FARGATE
       DesiredCount: 1
+      EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 10
       LoadBalancers:
         - ContainerName: ipfs
@@ -1175,6 +1168,49 @@ Resources:
         id: fbf5afa8-4764-48b0-b1cd-5a143b1d073b
     DependsOn:
       - SDPDN
+  ECSS3:
+    Type: 'AWS::ECS::Service'
+    Properties:
+      ServiceName: !Join 
+        - '-'
+        - - !Ref 'AWS::StackName'
+          - ipfs-node
+          - !Ref AvailabilityZone3
+      Cluster: !Ref ECSCIPFS
+      TaskDefinition: !Ref ECSTD3
+      LaunchType: FARGATE
+      DesiredCount: 1
+      EnableExecuteCommand: true
+      HealthCheckGracePeriodSeconds: 10
+      LoadBalancers:
+        - ContainerName: ipfs
+          ContainerPort: 8080
+          TargetGroupArn: !Ref ELBV2TGIPFSPEERSWEB
+        - ContainerName: ipfs-cluster
+          ContainerPort: 9094
+          TargetGroupArn: !Ref ELBV2TGIPFSPEERSAPI
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref EC2SGECS
+          Subnets:
+            - !Ref PublicSubnet3
+      DeploymentConfiguration:
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+      ServiceRegistries:
+        - RegistryArn: !GetAtt SDS3.Arn
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: fedc51bf-9a72-42a2-9272-453289343f3d
+    DependsOn:
+      - EFSMT3
+      - ELBV2LISTENERWEB
+      - ECSS1
+      - EFSAP3
+      - EFSFS3
+      - ELBV2LISTENERAPI
   SDS3:
     Type: 'AWS::ServiceDiscovery::Service'
     Properties:
@@ -1236,6 +1272,21 @@ Resources:
                 }
             ]
         }
+      Policies:
+        - PolicyName: !Join 
+            - '-'
+            - - !Ref 'AWS::StackName'
+              - SSMECSExecAccess
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ssmmessages:CreateControlChannel'
+                  - 'ssmmessages:CreateDataChannel'
+                  - 'ssmmessages:OpenControlChannel'
+                  - 'ssmmessages:OpenDataChannel'
+                Resource: '*'
     Metadata:
       'AWS::CloudFormation::Designer':
         id: c49abe89-ab10-4ea8-b998-b189d7827031
