@@ -663,6 +663,9 @@ Resources:
     Type: 'AWS::ECS::Cluster'
     Properties:
       ClusterName: !Ref 'AWS::StackName'
+      CapacityProviders:
+        - FARGATE
+        - FARGATE_SPOT
     Metadata:
       'AWS::CloudFormation::Designer':
         id: c52aad4e-8d0b-4bea-b06f-4e8859ae9672
@@ -1061,10 +1064,16 @@ Resources:
           - !Ref AvailabilityZone1
       Cluster: !Ref ECSCIPFS
       TaskDefinition: !Ref ECSTD1
-      LaunchType: FARGATE
       DesiredCount: 1
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 10
+      CapacityProviderStrategy:
+        - Base: 1
+          CapacityProvider: FARGATE
+          Weight: 1
+        - Base: 0
+          CapacityProvider: FARGATE_SPOT
+          Weight: 0
       LoadBalancers:
         - ContainerName: ipfs
           ContainerPort: 8080
@@ -1116,10 +1125,16 @@ Resources:
           - !Ref AvailabilityZone2
       Cluster: !Ref ECSCIPFS
       TaskDefinition: !Ref ECSTD2
-      LaunchType: FARGATE
       DesiredCount: 1
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 10
+      CapacityProviderStrategy:
+        - Base: 1
+          CapacityProvider: FARGATE
+          Weight: 1
+        - Base: 0
+          CapacityProvider: FARGATE_SPOT
+          Weight: 0
       LoadBalancers:
         - ContainerName: ipfs
           ContainerPort: 8080
@@ -1178,10 +1193,16 @@ Resources:
           - !Ref AvailabilityZone3
       Cluster: !Ref ECSCIPFS
       TaskDefinition: !Ref ECSTD3
-      LaunchType: FARGATE
       DesiredCount: 1
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 10
+      CapacityProviderStrategy:
+        - Base: 1
+          CapacityProvider: FARGATE
+          Weight: 1
+        - Base: 0
+          CapacityProvider: FARGATE_SPOT
+          Weight: 0
       LoadBalancers:
         - ContainerName: ipfs
           ContainerPort: 8080
