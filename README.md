@@ -13,6 +13,14 @@ Set `ONE_ZONE_EFS=False` in `ipfscluster.env`
 
 ![IPFS Cluster With EFS Standard Storage](image/ipfs-cluster-draw.io-StandardEFS.drawio.png)
 
+## Install CDK
+
+[Getting started with CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
+
+```
+npm install -g aws-cdk
+```
+
 ## Prepare CDK Environment
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
