@@ -1,6 +1,6 @@
 # Welcome to CDK Python project for IPFS Cluster on ECS Fargate!
 
-A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for the architect design.
+A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
 
 ## Architecture
 ### IPFS cluster with EFS One Zone Storage Class (Default)
