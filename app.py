@@ -10,7 +10,12 @@ from dotenv import dotenv_values
 IPFS_CLUSTER_ENV_FILE = 'ipfscluster.env'
 
 app = cdk.App()
-IpfsClusterFargateStack(app, "IpfsClusterFargateStack",
+
+STACK_NAME = 'IpfsClusterFargateStack' \
+    if app.node.try_get_context('stack_name') is None else \
+        app.node.try_get_context('stack_name')
+
+IpfsClusterFargateStack(app, STACK_NAME,
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
