@@ -83,6 +83,25 @@ command.
 
 ## Deploy the stack
 
+### Specify Stack Name
+
+The app will retrive stack name from context variable. You can reference [doc](https://docs.aws.amazon.com/cdk/v2/guide/get_context_var.html) for more details. The default stack name is `IpfsClusterFargateStack`. Following is a sample command for specifing stack name while deploy stack via `CDK CLI`.
+
+```
+cdk deploy -c stack_name=$YOUR_IPFS_CLUSTER_NAME
+```
+
+Or you can specify stack name in `cdk.json`
+```
+{
+  "context":{
+    ...
+    "stack_name": "$YOUR_STACK_NAME",
+    ...
+  }
+}
+```
+
 ### Configure the EFS storage 
 
 Set `ONE_ZONE_EFS` to `True` in `ipfscluster.env` will deploy EFS one zone file system and access poinbt on each AZ
