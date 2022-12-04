@@ -1,4 +1,4 @@
-# Example Dockerfile to integrate the go-ds-s3 plugin for IPFS
+# Dockerfile and script to integrate the go-ds-s3 plugin
 
 The Dockerfile builds IPFS and the go-ds-s3 plugin together using the same golang version.
 It copies the relevant files to the new Docker image.
@@ -22,38 +22,10 @@ The init script injects the following config in the `Swarm.ResourceMgr.Limits.Sy
 }
 ```
 
-The script also inject the correct config in the `Datastore.Spec` object to setup the plugin:
+The script also inject the correct config in the `Datastore.Spec` object to setup the plugin and
+update the `datastore_spec` file to reflect the new configuration.
 
-```
-{ 
-    mounts: [
-        {
-          child: {
-            type: \"s3ds\",
-            region: \"${AWS_REGION}\",
-            bucket: \"${CLUSTER_S3_BUCKET}\",
-            rootDirectory: \"${CLUSTER_PEERNAME}\",
-            accessKey: \"${CLUSTER_AWS_KEY}\",
-            secretKey: \"${CLUSTER_AWS_SECRET}\"
-          },
-          mountpoint: \"/blocks\",
-          prefix: \"s3.datastore\",
-          type: \"measure\"
-        },
-        {
-          child: {
-            compression: \"none\",
-            path: \"datastore\",
-            type: \"levelds\"
-          },
-          mountpoint: \"/\",
-          prefix: \"leveldb.datastore\",
-          type: \"measure\"
-        }
-    ], 
-    type: \"mount\"
-}
-```
+Edit the `001-config.sh` to fit your use case.
 
 ## Building the image
 
