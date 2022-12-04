@@ -1,6 +1,6 @@
 # Welcome to CDK Python project for IPFS Cluster on ECS Fargate!
 
-A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for the architect design.
+A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
 
 ## Architecture
 ### IPFS cluster with EFS One Zone Storage Class (Default)
@@ -70,7 +70,7 @@ $ cdk synth
 ```
 
 To add additional dependencies, for example other CDK libraries, just add
-them to your `setup.py` file and rerun the `pip install -r requirements.txt`
+them to your `requirements.txt` file and rerun the `pip install -r requirements.txt`
 command.
 
 ### Useful commands
@@ -82,6 +82,25 @@ command.
  * `cdk docs`        open CDK documentation
 
 ## Deploy the stack
+
+### Specify Stack Name
+
+The app will retrive stack name from context variable. You can reference [doc](https://docs.aws.amazon.com/cdk/v2/guide/get_context_var.html) for more details. The default stack name is `IpfsClusterFargateStack`. Following is a sample command for specifing stack name while deploy stack via `CDK CLI`.
+
+```
+cdk deploy -c stack_name=$YOUR_IPFS_CLUSTER_NAME
+```
+
+Or you can specify stack name in `cdk.json`
+```
+{
+  "context":{
+    ...
+    "stack_name": "$YOUR_STACK_NAME",
+    ...
+  }
+}
+```
 
 ### Configure the EFS storage 
 
