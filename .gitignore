@@ -1,0 +1,7 @@
+.DS_Store
+cdk.context.json
+cdk.out
+cdk.out/*
+ipfs_cluster/__pycache__
+ipfs_cluster/__pycache__/*
+.env
