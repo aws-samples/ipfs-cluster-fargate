@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Metadata:
   QuickStartDocumentation:
     EntrypointName: IPFS Cluster stack
-  'AWS::CloudFormation::Interface':
+  "AWS::CloudFormation::Interface":
     ParameterGroups:
       - Label:
           default: Network configuration
@@ -20,6 +20,13 @@ Metadata:
           default: IPFS Configuration
         Parameters:
           - DockerImageIPFS
+          - EFSThroughputMode
+      - Label:
+          default: IPFS S3 Plugin configuration (optional)
+        Parameters:
+          - ClusterS3Bucket
+          - ClusterAWSKey
+          - ClusterAWSSecret
       - Label:
           default: IPFS Cluster Configuration
         Parameters:
@@ -56,29 +63,37 @@ Metadata:
       DockerImageIPFSCluster:
         default: Docker image to use for IPFS Cluster
       ClusterCrdtTrustedPeers:
-        default: CLUSTER_CRDT_TRUSTEDPEERS envrionment variable
+        default: CLUSTER_CRDT_TRUSTEDPEERS environment variable
       ClusterIPFSHTTPNodeMutiAddress:
-        default: CLUSTER_IPFSHTTP_NODEMULTIADDRESS envrionment variable
+        default: CLUSTER_IPFSHTTP_NODEMULTIADDRESS environment variable
       ClusterMonitoringInterval:
-        default: CLUSTER_MONITORPINGINTERVAL envrionment variable
+        default: CLUSTER_MONITORPINGINTERVAL environment variable
       ClusterRESTAPIBasicAuthCredentials:
-        default: CLUSTER_RESTAPI_BASICAUTHCREDENTIALS envrionment variable
+        default: CLUSTER_RESTAPI_BASICAUTHCREDENTIALS secret environment variable
       ClusterRESTAPIHTTPListenMultiAddress:
-        default: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS envrionment variable
+        default: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS environment variable
       ClusterSecret:
-        default: CLUSTER_SECRET envrionment variable
+        default: CLUSTER_SECRET secret environment variable
       ClusterId:
-        default: CLUSTER_ID envrionment variable
+        default: CLUSTER_ID environment variable
       ClusterPrivateKey:
-        default: CLUSTER_PRIVATEKEY envrionment variable
-  'AWS::CloudFormation::Designer':
+        default: CLUSTER_PRIVATEKEY secret environment variable
+      ClusterS3Bucket:
+        default: CLUSTER_S3_BUCKET environment variable
+      ClusterAWSKey:
+        default: CLUSTER_AWS_KEY secret environment variable
+      ClusterAWSSecret:
+        default: CLUSTER_AWS_SECRET secret environment variable
+      EFSThroughputMode:
+        default: EFS Throughput mode
+  "AWS::CloudFormation::Designer":
     671e25d7-f5fc-4c88-9412-a439adb3e75c:
       size:
         width: 60
         height: 60
       position:
         x: 80
-        'y': 980
+        "y": 980
       z: 1
       embeds: []
     944a529f-e873-4a50-927c-a5ff3975893b:
@@ -87,7 +102,7 @@ Metadata:
         height: 60
       position:
         x: 820
-        'y': 400
+        "y": 400
       z: 1
       embeds: []
     c52aad4e-8d0b-4bea-b06f-4e8859ae9672:
@@ -96,7 +111,7 @@ Metadata:
         height: 60
       position:
         x: -400
-        'y': 610
+        "y": 610
       z: 1
       embeds: []
     38a65a60-de48-4482-9b7e-2d0c896ed8b5:
@@ -105,7 +120,7 @@ Metadata:
         height: 60
       position:
         x: -220
-        'y': 680
+        "y": 680
       z: 1
       embeds: []
       dependson:
@@ -120,7 +135,7 @@ Metadata:
         height: 60
       position:
         x: 80
-        'y': 680
+        "y": 680
       z: 1
       embeds: []
       dependson:
@@ -137,7 +152,7 @@ Metadata:
         height: 60
       position:
         x: -70
-        'y': 680
+        "y": 680
       z: 0
       embeds: []
       dependson:
@@ -153,7 +168,7 @@ Metadata:
         height: 60
       position:
         x: -220
-        'y': 560
+        "y": 560
       z: 1
       embeds: []
       dependson:
@@ -164,7 +179,7 @@ Metadata:
         height: 60
       position:
         x: -70
-        'y': 560
+        "y": 560
       z: 1
       embeds: []
       dependson:
@@ -175,7 +190,7 @@ Metadata:
         height: 60
       position:
         x: 80
-        'y': 560
+        "y": 560
       z: 1
       embeds: []
       dependson:
@@ -186,7 +201,7 @@ Metadata:
         height: 60
       position:
         x: 450
-        'y': 630
+        "y": 630
       z: 1
       embeds: []
     089301d5-1ef1-422c-ba8c-6dc9bcc5f9a0:
@@ -195,7 +210,7 @@ Metadata:
         height: 60
       position:
         x: 450
-        'y': 490
+        "y": 490
       z: 1
       embeds: []
     a5902b6b-db07-47e4-ab6f-01ce0e34b2ec:
@@ -204,7 +219,7 @@ Metadata:
         height: 60
       position:
         x: 570
-        'y': 630
+        "y": 630
       z: 1
       embeds: []
     7f4b4927-04f4-4c8c-a0aa-2f3f364af809:
@@ -213,7 +228,7 @@ Metadata:
         height: 60
       position:
         x: 450
-        'y': 770
+        "y": 770
       z: 0
       embeds: []
     2b9205ce-42bb-451a-b122-839b73152c1e:
@@ -222,7 +237,7 @@ Metadata:
         height: 60
       position:
         x: 570
-        'y': 770
+        "y": 770
       z: 1
       embeds: []
     eaa729af-2d22-438e-a155-239ef2ef7140:
@@ -231,7 +246,7 @@ Metadata:
         height: 60
       position:
         x: 570
-        'y': 490
+        "y": 490
       z: 1
       embeds: []
     1bbe1c7c-1621-4113-bffe-10c649c91e49:
@@ -240,7 +255,7 @@ Metadata:
         height: 60
       position:
         x: 690
-        'y': 630
+        "y": 630
       z: 1
       embeds: []
     1c80c63f-1087-4516-b4b3-fadbcf0c2c1e:
@@ -249,7 +264,7 @@ Metadata:
         height: 60
       position:
         x: 690
-        'y': 770
+        "y": 770
       z: 1
       embeds: []
     9d8a0294-a468-4220-b11c-f82d27e51cfb:
@@ -258,7 +273,7 @@ Metadata:
         height: 60
       position:
         x: 690
-        'y': 490
+        "y": 490
       z: 1
       embeds: []
     c18e419c-3319-4614-b794-a4a4cdc17a8a:
@@ -267,7 +282,7 @@ Metadata:
         height: 60
       position:
         x: -420
-        'y': 1060
+        "y": 1060
       z: 1
       embeds: []
     dca3f21d-5c1b-485e-9743-f6bb7986ecc6:
@@ -276,7 +291,7 @@ Metadata:
         height: 60
       position:
         x: -550
-        'y': 1060
+        "y": 1060
       z: 1
       embeds: []
     c49abe89-ab10-4ea8-b998-b189d7827031:
@@ -285,7 +300,7 @@ Metadata:
         height: 60
       position:
         x: -270
-        'y': 420
+        "y": 420
       z: 1
       embeds: []
     dfb2622d-be70-4280-b1c8-14bf119c4113:
@@ -294,7 +309,7 @@ Metadata:
         height: 60
       position:
         x: 460
-        'y': 210
+        "y": 210
       z: 1
       embeds: []
     1464327f-a66b-498d-b00c-85f903dfb532:
@@ -303,7 +318,7 @@ Metadata:
         height: 60
       position:
         x: -820
-        'y': 1110
+        "y": 1110
       z: 1
       embeds: []
     fbf5afa8-4764-48b0-b1cd-5a143b1d073b:
@@ -312,7 +327,7 @@ Metadata:
         height: 60
       position:
         x: 550
-        'y': 310
+        "y": 310
       z: 1
       embeds: []
     6bdfc899-ad3e-4cbb-80ec-01311e21d9f2:
@@ -321,7 +336,7 @@ Metadata:
         height: 60
       position:
         x: 460
-        'y': 310
+        "y": 310
       z: 1
       embeds: []
     47a4ded2-3311-4311-b9d3-c3e3af4068d3:
@@ -330,7 +345,7 @@ Metadata:
         height: 60
       position:
         x: 370
-        'y': 310
+        "y": 310
       z: 1
       embeds: []
     135473e6-47b3-4a99-b7f6-67991742f3d2:
@@ -339,7 +354,7 @@ Metadata:
         height: 60
       position:
         x: -270
-        'y': 360
+        "y": 360
       z: 1
       embeds: []
     3e683aa3-1887-451d-85b9-7651907125ca:
@@ -348,7 +363,7 @@ Metadata:
         height: 90
       position:
         x: -450
-        'y': 420
+        "y": 420
       z: 1
       embeds: []
     72f724db-2ef1-4a99-a931-bf5ac460184b:
@@ -357,7 +372,7 @@ Metadata:
         height: 90
       position:
         x: -550
-        'y': 420
+        "y": 420
       z: 1
       embeds: []
     5e8d1a50-4a53-444d-a05a-25a515cf77ca:
@@ -366,7 +381,7 @@ Metadata:
         height: 90
       position:
         x: -650
-        'y': 420
+        "y": 420
       z: 1
       embeds: []
     97a525c6-c9c5-47f6-9513-d0e2570213ca:
@@ -375,7 +390,7 @@ Metadata:
         height: 60
       position:
         x: -550
-        'y': 850
+        "y": 850
       z: 1
       embeds: []
       dependson:
@@ -388,7 +403,7 @@ Metadata:
         height: 60
       position:
         x: -420
-        'y': 850
+        "y": 850
       z: 1
       embeds: []
     acc5177a-0771-4cd6-9c2c-dfa154db94db:
@@ -397,7 +412,7 @@ Metadata:
         height: 60
       position:
         x: -820
-        'y': 850
+        "y": 850
       z: 0
       embeds: []
     2a6c8cb7-817c-4935-b6cc-9b2a9ce14488:
@@ -406,7 +421,7 @@ Metadata:
         height: 60
       position:
         x: -820
-        'y': 980
+        "y": 980
       z: 1
       embeds: []
       isassociatedwith:
@@ -417,7 +432,7 @@ Metadata:
         height: 60
       position:
         x: -660
-        'y': 980
+        "y": 980
       z: 1
       embeds: []
     4861969f-0fd7-456b-afa5-e1123bb0a387:
@@ -426,7 +441,7 @@ Metadata:
         height: 60
       position:
         x: -780
-        'y': 550
+        "y": 550
       z: 0
       embeds: []
     ff6c6a0e-8138-4403-b6f9-dfa40d658057:
@@ -435,7 +450,7 @@ Metadata:
         height: 60
       position:
         x: -780
-        'y': 620
+        "y": 620
       z: 0
       embeds: []
     449b90d1-f252-4e80-9808-4aaa64de8f87:
@@ -444,7 +459,7 @@ Metadata:
         height: 60
       position:
         x: -780
-        'y': 690
+        "y": 690
       z: 0
       embeds: []
     4b4e7a59-95c9-47ba-93c9-d1764b5359b0:
@@ -453,18 +468,134 @@ Metadata:
         height: 60
       position:
         x: -780
-        'y': 480
+        "y": 480
       z: 0
       embeds: []
+Parameters:
+  VPCId:
+    Type: "AWS::EC2::VPC::Id"
+    Description: The ID of the VPC to use to deploy this IPFS stack into
+  CidrBlock:
+    AllowedPattern: '((\d{1,3})\.){3}\d{1,3}/\d{1,2}'
+    Description: "VPC CIDR Block. In your VPC console, find the 'IPv4 CIDR' block associated with it. (e.g: 172.31.0.0/16 or 10.0.0.0/16 or any valid CIDR)"
+    Type: String
+  AvailabilityZone1:
+    Type: "AWS::EC2::AvailabilityZone::Name"
+    Description: Availability zone 1 where the first node will be deployed to
+  PublicSubnet1:
+    Type: "AWS::EC2::Subnet::Id"
+    Description: Public subnet 1 within the availability zone 1 selected above
+  AvailabilityZone2:
+    Type: "AWS::EC2::AvailabilityZone::Name"
+    Description: Availability zone 2 where the second node will be deployed to
+  PublicSubnet2:
+    Type: "AWS::EC2::Subnet::Id"
+    Description: Public subnet 2 within the availability zone 2 selected above
+  AvailabilityZone3:
+    Type: "AWS::EC2::AvailabilityZone::Name"
+    Description: Availability zone 3 where the third node will be deployed to
+  PublicSubnet3:
+    Type: "AWS::EC2::Subnet::Id"
+    Description: Public subnet 3 within the availability zone 3 selected above
+  CloudfrontPrefixListId:
+    Type: String
+    MinLength: 1
+    Description: >-
+      Enter the ID of the Prefix List for
+      'com.amazonaws.global.cloudfront.origin-facing' so we can allow only
+      Cloudfront to access our ALB. See AWS VPC Console -> Managed prefix lists.
+  DockerImageIPFS:
+    Type: String
+    MinLength: 1
+    Default: ipfs/kubo:latest
+    AllowedPattern: ^.+$
+    Description: The Docker image to use for IPFS. Reference your own custom Docker image (custom config)
+  DockerImageIPFSCluster:
+    Type: String
+    MinLength: 1
+    Default: ipfs/ipfs-cluster:latest
+    AllowedPattern: ^.+$
+    Description: The Docker image to use for IPFS Cluster
+  ClusterCrdtTrustedPeers:
+    Type: String
+    MinLength: 1
+    Default: "*"
+    AllowedPattern: ^.+$
+    Description: Trust all peers in the cluster or restict trust to some peers?
+  ClusterIPFSHTTPNodeMutiAddress:
+    Type: String
+    MinLength: 1
+    Default: /ip4/0.0.0.0/tcp/5001
+    AllowedPattern: ^.+$
+    Description: The IP Address of the IPFS API IPFS Cluster can connect to
+  ClusterMonitoringInterval:
+    Type: String
+    MinLength: 2
+    Default: 2s
+    AllowedPattern: ^.+$
+    Description: How fast you want new peers to be detected
+  ClusterRESTAPIBasicAuthCredentials:
+    Type: String
+    MinLength: 3
+    AllowedPattern: "^.+:.+$"
+    Description: "The login:password combination needed to secure the IPFS Cluster API"
+  ClusterRESTAPIHTTPListenMultiAddress:
+    Type: String
+    MinLength: 1
+    Default: /ip4/0.0.0.0/tcp/9094
+    AllowedPattern: ^.+$
+    Description: Enter the ip/port IPFS Cluster HTTP API will listen on
+  ClusterId:
+    Type: String
+    MinLength: 52
+    AllowedPattern: "^.{52}$"
+    Description: Provide the ID of your main IPFS Cluster node
+  ClusterPrivateKey:
+    Type: String
+    MinLength: 92
+    AllowedPattern: "^.{92}$"
+    Description: Provide the PRIVATE KEY of your main IPFS Cluster node
+  ClusterSecret:
+    Type: String
+    MinLength: 64
+    AllowedPattern: "^.{64}$"
+    Description: The SECRET to share amongst all IPFS CLuster nodes to restrict access
+  ClusterS3Bucket:
+    Type: String
+    MaxLength: 63
+    Default: ipfs-cluster-blockstore
+    Description: Optional. Can be used to reference a S3 bucket if you want to use the S3 plugin (https://github.com/ipfs/go-ds-s3)
+  ClusterAWSKey:
+    Type: String
+    Description: Optional. ARN or Name (if same region) of the SSM Parameter store parameter containing the AWS Key to use for the S3 plugin (https://github.com/ipfs/go-ds-s3)
+  ClusterAWSSecret:
+    Type: String
+    Description: Optional. ARN or Name (if same region) of the SSM Parameter store parameter containing the AWS Secret to use for the S3 plugin (https://github.com/ipfs/go-ds-s3)
+  EFSThroughputMode:
+    AllowedValues:
+      - elastic
+      - bursting
+    Default: elastic
+    Description: "'bursting' is ok if you use the S3 plugin for datastore. If you use EFS for datastore use 'elastic'. See: https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+    Type: String
+Conditions:
+  HasAWSKey: !Not
+    - !Equals
+      - !Ref ClusterAWSKey
+      - ""
+  HasAWSSecret: !Not
+    - !Equals
+      - !Ref ClusterAWSSecret
+      - ""
 Resources:
   EC2SGEFS:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       VpcId: !Ref VPCId
       GroupDescription: Allow EFS access from IPFS cluster
-      GroupName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      GroupName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-efs
       SecurityGroupEgress:
         - CidrIp: !Ref CidrBlock
@@ -479,16 +610,16 @@ Resources:
           IpProtocol: TCP
           Description: Incoming NFS connections from the IPFS nodes
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 944a529f-e873-4a50-927c-a5ff3975893b
   EC2SGECS:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       VpcId: !Ref VPCId
       GroupDescription: Allow access to IPFS nodes
-      GroupName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      GroupName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-nodes
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
@@ -523,158 +654,158 @@ Resources:
           IpProtocol: TCP
           Description: IPFS RPC API from internal network only
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 671e25d7-f5fc-4c88-9412-a439adb3e75c
   EFSFS1:
-    Type: 'AWS::EFS::FileSystem'
+    Type: "AWS::EFS::FileSystem"
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone1
       Encrypted: true
-      ThroughputMode: elastic
+      ThroughputMode: !Ref EFSThroughputMode
       FileSystemTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
               - !Ref AvailabilityZone1
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: a3f2e14d-08fc-4ef0-9963-7b180257faf4
   EFSFS2:
-    Type: 'AWS::EFS::FileSystem'
+    Type: "AWS::EFS::FileSystem"
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone2
       Encrypted: true
-      ThroughputMode: elastic
+      ThroughputMode: !Ref EFSThroughputMode
       FileSystemTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
               - !Ref AvailabilityZone2
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: a5902b6b-db07-47e4-ab6f-01ce0e34b2ec
   EFSFS3:
-    Type: 'AWS::EFS::FileSystem'
+    Type: "AWS::EFS::FileSystem"
     Properties:
       AvailabilityZoneName: !Ref AvailabilityZone3
       Encrypted: true
-      ThroughputMode: elastic
+      ThroughputMode: !Ref EFSThroughputMode
       FileSystemTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
               - !Ref AvailabilityZone3
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 1bbe1c7c-1621-4113-bffe-10c649c91e49
   EFSMT1:
-    Type: 'AWS::EFS::MountTarget'
+    Type: "AWS::EFS::MountTarget"
     Properties:
       FileSystemId: !Ref EFSFS1
       SubnetId: !Ref PublicSubnet1
       SecurityGroups:
         - !Ref EC2SGEFS
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 089301d5-1ef1-422c-ba8c-6dc9bcc5f9a0
     DependsOn:
       - EC2SGEFS
       - EFSFS1
   EFSAP1:
-    Type: 'AWS::EFS::AccessPoint'
+    Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
       RootDirectory:
         Path: /
       FileSystemId: !Ref EFSFS1
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 7f4b4927-04f4-4c8c-a0aa-2f3f364af809
   EFSMT2:
-    Type: 'AWS::EFS::MountTarget'
+    Type: "AWS::EFS::MountTarget"
     Properties:
       FileSystemId: !Ref EFSFS2
       SubnetId: !Ref PublicSubnet2
       SecurityGroups:
         - !Ref EC2SGEFS
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: eaa729af-2d22-438e-a155-239ef2ef7140
     DependsOn:
       - EC2SGEFS
       - EFSFS2
   EFSAP2:
-    Type: 'AWS::EFS::AccessPoint'
+    Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
       RootDirectory:
         Path: /
       FileSystemId: !Ref EFSFS2
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 2b9205ce-42bb-451a-b122-839b73152c1e
   EFSMT3:
-    Type: 'AWS::EFS::MountTarget'
+    Type: "AWS::EFS::MountTarget"
     Properties:
       FileSystemId: !Ref EFSFS3
       SubnetId: !Ref PublicSubnet3
       SecurityGroups:
         - !Ref EC2SGEFS
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 9d8a0294-a468-4220-b11c-f82d27e51cfb
     DependsOn:
       - EC2SGEFS
       - EFSFS3
   EFSAP3:
-    Type: 'AWS::EFS::AccessPoint'
+    Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
         - Key: Name
-          Value: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - ipfs
       RootDirectory:
         Path: /
       FileSystemId: !Ref EFSFS3
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 1c80c63f-1087-4516-b4b3-fadbcf0c2c1e
     DependsOn:
       - EFSFS3
   ECSCIPFS:
-    Type: 'AWS::ECS::Cluster'
+    Type: "AWS::ECS::Cluster"
     Properties:
-      ClusterName: !Ref 'AWS::StackName'
+      ClusterName: !Ref "AWS::StackName"
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: c52aad4e-8d0b-4bea-b06f-4e8859ae9672
   ECSTD1:
-    Type: 'AWS::ECS::TaskDefinition'
+    Type: "AWS::ECS::TaskDefinition"
     Properties:
-      Family: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Family: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone1
       Cpu: 1024
@@ -697,7 +828,28 @@ Resources:
             TransitEncryption: ENABLED
       ContainerDefinitions:
         - Name: ipfs
-          Image: 'ipfs/kubo:latest'
+          Image: !Ref DockerImageIPFS
+          Secrets:
+            - !If
+              - HasAWSKey
+              - Name: CLUSTER_AWS_KEY
+                ValueFrom: !Ref ClusterAWSKey
+              - !Ref AWS::NoValue
+            - !If
+              - HasAWSSecret
+              - Name: CLUSTER_AWS_SECRET
+                ValueFrom: !Ref ClusterAWSSecret
+              - !Ref AWS::NoValue
+          Environment:
+            - Name: CLUSTER_S3_BUCKET
+              Value: !Ref ClusterS3Bucket
+            - Name: CLUSTER_PEERNAME
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node1
+            - Name: AWS_REGION
+              Value: !Ref "AWS::Region"
           PortMappings:
             - ContainerPort: 4001
               HostPort: 4001
@@ -714,22 +866,22 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone1
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs
           HealthCheck:
             Command:
               - CMD-SHELL
               - >-
                 /usr/local/bin/ipfs dag stat
-                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1 
+                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1
         - Name: ipfs-cluster
-          Image: 'ipfs/ipfs-cluster:latest'
+          Image: !Ref DockerImageIPFSCluster
           DependsOn:
             - Condition: HEALTHY
               ContainerName: ipfs
@@ -748,7 +900,10 @@ Resources:
             - Name: CLUSTER_MONITORPINGINTERVAL
               Value: !Ref ClusterMonitoringInterval
             - Name: CLUSTER_PEERNAME
-              Value: node1
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node1
             - Name: CLUSTER_IPFSHTTP_NODEMULTIADDRESS
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
@@ -766,36 +921,36 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone1
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs-cluster
           HealthCheck:
             Command:
               - CMD-SHELL
-              - !Join 
-                  - ' '
-                  - - /usr/local/bin/ipfs-cluster-ctl
-                    - --force-http
-                    - --basic-auth
-                    - !Ref SSMPCLUSTERBASICAUTH
-                    - '|| exit 1'
+              - !Join
+                - " "
+                - - /usr/local/bin/ipfs-cluster-ctl
+                  - --force-http
+                  - --basic-auth
+                  - !Ref SSMPCLUSTERBASICAUTH
+                  - "|| exit 1"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 783256d9-83c7-40da-8041-8c76eb90a943
     DependsOn:
       - IAMRTASK
       - LLG1
   ECSTD2:
-    Type: 'AWS::ECS::TaskDefinition'
+    Type: "AWS::ECS::TaskDefinition"
     Properties:
-      Family: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Family: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone2
       Cpu: 1024
@@ -818,7 +973,28 @@ Resources:
             TransitEncryption: ENABLED
       ContainerDefinitions:
         - Name: ipfs
-          Image: 'ipfs/kubo:latest'
+          Image: !Ref DockerImageIPFS
+          Secrets:
+            - !If
+              - HasAWSKey
+              - Name: CLUSTER_AWS_KEY
+                ValueFrom: !Ref ClusterAWSKey
+              - !Ref AWS::NoValue
+            - !If
+              - HasAWSSecret
+              - Name: CLUSTER_AWS_SECRET
+                ValueFrom: !Ref ClusterAWSSecret
+              - !Ref AWS::NoValue
+          Environment:
+            - Name: CLUSTER_S3_BUCKET
+              Value: !Ref ClusterS3Bucket
+            - Name: CLUSTER_PEERNAME
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node2
+            - Name: AWS_REGION
+              Value: !Ref "AWS::Region"
           PortMappings:
             - ContainerPort: 4001
               HostPort: 4001
@@ -835,22 +1011,22 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone2
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs
           HealthCheck:
             Command:
               - CMD-SHELL
               - >-
                 /usr/local/bin/ipfs dag stat
-                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1 
+                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1
         - Name: ipfs-cluster
-          Image: 'ipfs/ipfs-cluster:latest'
+          Image: !Ref DockerImageIPFSCluster
           DependsOn:
             - Condition: HEALTHY
               ContainerName: ipfs
@@ -865,7 +1041,10 @@ Resources:
             - Name: CLUSTER_MONITORPINGINTERVAL
               Value: !Ref ClusterMonitoringInterval
             - Name: CLUSTER_PEERNAME
-              Value: node2
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node2
             - Name: CLUSTER_IPFSHTTP_NODEMULTIADDRESS
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
@@ -882,52 +1061,52 @@ Resources:
               SourceVolume: ipfs
           Command:
             - daemon
-            - '--bootstrap'
-            - !Join 
-              - ''
+            - "--bootstrap"
+            - !Join
+              - ""
               - - /dns/
-                - !Join 
-                  - '-'
-                  - - !Ref 'AWS::StackName'
+                - !Join
+                  - "-"
+                  - - !Ref "AWS::StackName"
                     - ipfs-node
                     - !Ref AvailabilityZone1
                 - .
-                - !Ref 'AWS::StackName'
+                - !Ref "AWS::StackName"
                 - /tcp/9096/p2p/
                 - !Ref ClusterId
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone2
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs-cluster
           HealthCheck:
             Command:
               - CMD-SHELL
-              - !Join 
-                  - ' '
-                  - - /usr/local/bin/ipfs-cluster-ctl
-                    - --force-http
-                    - --basic-auth
-                    - !Ref SSMPCLUSTERBASICAUTH
-                    - '|| exit 1'
+              - !Join
+                - " "
+                - - /usr/local/bin/ipfs-cluster-ctl
+                  - --force-http
+                  - --basic-auth
+                  - !Ref SSMPCLUSTERBASICAUTH
+                  - "|| exit 1"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: b886db16-5df0-474f-9c8a-624fe1c40032
     DependsOn:
       - IAMRTASK
       - LLG2
   ECSTD3:
-    Type: 'AWS::ECS::TaskDefinition'
+    Type: "AWS::ECS::TaskDefinition"
     Properties:
-      Family: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Family: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone3
       Cpu: 1024
@@ -950,7 +1129,28 @@ Resources:
             TransitEncryption: ENABLED
       ContainerDefinitions:
         - Name: ipfs
-          Image: 'ipfs/kubo:latest'
+          Image: !Ref DockerImageIPFS
+          Secrets:
+            - !If
+              - HasAWSKey
+              - Name: CLUSTER_AWS_KEY
+                ValueFrom: !Ref ClusterAWSKey
+              - !Ref AWS::NoValue
+            - !If
+              - HasAWSSecret
+              - Name: CLUSTER_AWS_SECRET
+                ValueFrom: !Ref ClusterAWSSecret
+              - !Ref AWS::NoValue
+          Environment:
+            - Name: CLUSTER_S3_BUCKET
+              Value: !Ref ClusterS3Bucket
+            - Name: CLUSTER_PEERNAME
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node3
+            - Name: AWS_REGION
+              Value: !Ref "AWS::Region"
           PortMappings:
             - ContainerPort: 4001
               HostPort: 4001
@@ -967,22 +1167,22 @@ Resources:
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone3
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs
           HealthCheck:
             Command:
               - CMD-SHELL
               - >-
                 /usr/local/bin/ipfs dag stat
-                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1 
+                /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn || exit 1
         - Name: ipfs-cluster
-          Image: 'ipfs/ipfs-cluster:latest'
+          Image: !Ref DockerImageIPFSCluster
           DependsOn:
             - Condition: HEALTHY
               ContainerName: ipfs
@@ -997,7 +1197,10 @@ Resources:
             - Name: CLUSTER_MONITORPINGINTERVAL
               Value: !Ref ClusterMonitoringInterval
             - Name: CLUSTER_PEERNAME
-              Value: node3
+              Value: !Join
+                - "-"
+                - - !Ref "AWS::StackName"
+                  - node3
             - Name: CLUSTER_IPFSHTTP_NODEMULTIADDRESS
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
@@ -1014,52 +1217,52 @@ Resources:
               SourceVolume: ipfs
           Command:
             - daemon
-            - '--bootstrap'
-            - !Join 
-              - ''
+            - "--bootstrap"
+            - !Join
+              - ""
               - - /dns/
-                - !Join 
-                  - '-'
-                  - - !Ref 'AWS::StackName'
+                - !Join
+                  - "-"
+                  - - !Ref "AWS::StackName"
                     - ipfs-node
                     - !Ref AvailabilityZone1
                 - .
-                - !Ref 'AWS::StackName'
+                - !Ref "AWS::StackName"
                 - /tcp/9096/p2p/
                 - !Ref ClusterId
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Join 
-                - ''
+              awslogs-group: !Join
+                - ""
                 - - /ecs/
-                  - !Ref 'AWS::StackName'
-                  - '-ipfs-node-'
+                  - !Ref "AWS::StackName"
+                  - "-ipfs-node-"
                   - !Ref AvailabilityZone3
-              awslogs-region: !Ref 'AWS::Region'
+              awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ipfs-cluster
           HealthCheck:
             Command:
               - CMD-SHELL
-              - !Join 
-                  - ' '
-                  - - /usr/local/bin/ipfs-cluster-ctl
-                    - --force-http
-                    - --basic-auth
-                    - !Ref SSMPCLUSTERBASICAUTH
-                    - '|| exit 1'
+              - !Join
+                - " "
+                - - /usr/local/bin/ipfs-cluster-ctl
+                  - --force-http
+                  - --basic-auth
+                  - !Ref SSMPCLUSTERBASICAUTH
+                  - "|| exit 1"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: f3038330-12d6-49cf-ab47-8bc136a6f79e
     DependsOn:
       - IAMRTASK
       - LLG3
   ECSS1:
-    Type: 'AWS::ECS::Service'
+    Type: "AWS::ECS::Service"
     Properties:
-      ServiceName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      ServiceName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone1
       Cluster: !Ref ECSCIPFS
@@ -1094,7 +1297,7 @@ Resources:
       ServiceRegistries:
         - RegistryArn: !GetAtt SDS1.Arn
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 38a65a60-de48-4482-9b7e-2d0c896ed8b5
     DependsOn:
       - EFSMT1
@@ -1103,24 +1306,24 @@ Resources:
       - EFSFS1
       - ELBV2LISTENERAPI
   SDPDN:
-    Type: 'AWS::ServiceDiscovery::PrivateDnsNamespace'
+    Type: "AWS::ServiceDiscovery::PrivateDnsNamespace"
     Properties:
       Description: Private Discovery service for IPFS Nodes
-      Name: !Ref 'AWS::StackName'
+      Name: !Ref "AWS::StackName"
       Properties:
         DnsProperties:
           SOA:
             TTL: 15
       Vpc: !Ref VPCId
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: dfb2622d-be70-4280-b1c8-14bf119c4113
   ECSS2:
-    Type: 'AWS::ECS::Service'
+    Type: "AWS::ECS::Service"
     Properties:
-      ServiceName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      ServiceName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone2
       Cluster: !Ref ECSCIPFS
@@ -1155,7 +1358,7 @@ Resources:
       ServiceRegistries:
         - RegistryArn: !GetAtt SDS2.Arn
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 8f04680c-4cc6-41a2-a460-aa5f11e41913
     DependsOn:
       - EFSMT2
@@ -1165,12 +1368,12 @@ Resources:
       - EFSFS2
       - ELBV2LISTENERAPI
   SDS1:
-    Type: 'AWS::ServiceDiscovery::Service'
+    Type: "AWS::ServiceDiscovery::Service"
     Properties:
       Description: IPFS Service discovery
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone1
       DnsConfig:
@@ -1179,16 +1382,16 @@ Resources:
             Type: A
         NamespaceId: !Ref SDPDN
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: fbf5afa8-4764-48b0-b1cd-5a143b1d073b
     DependsOn:
       - SDPDN
   ECSS3:
-    Type: 'AWS::ECS::Service'
+    Type: "AWS::ECS::Service"
     Properties:
-      ServiceName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      ServiceName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone3
       Cluster: !Ref ECSCIPFS
@@ -1223,7 +1426,7 @@ Resources:
       ServiceRegistries:
         - RegistryArn: !GetAtt SDS3.Arn
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: fedc51bf-9a72-42a2-9272-453289343f3d
     DependsOn:
       - EFSMT3
@@ -1233,12 +1436,12 @@ Resources:
       - EFSFS3
       - ELBV2LISTENERAPI
   SDS3:
-    Type: 'AWS::ServiceDiscovery::Service'
+    Type: "AWS::ServiceDiscovery::Service"
     Properties:
       Description: IPFS Service discovery
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone3
       DnsConfig:
@@ -1247,17 +1450,17 @@ Resources:
             Type: A
         NamespaceId: !Ref SDPDN
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 47a4ded2-3311-4311-b9d3-c3e3af4068d3
     DependsOn:
       - SDPDN
   SDS2:
-    Type: 'AWS::ServiceDiscovery::Service'
+    Type: "AWS::ServiceDiscovery::Service"
     Properties:
       Description: IPFS Service discovery
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-node
           - !Ref AvailabilityZone2
       DnsConfig:
@@ -1266,19 +1469,19 @@ Resources:
             Type: A
         NamespaceId: !Ref SDPDN
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 6bdfc899-ad3e-4cbb-80ec-01311e21d9f2
     DependsOn:
       - SDPDN
   IAMRTASK:
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      RoleName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - EcsRunTaskRole
       ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
       AssumeRolePolicyDocument: |
         {
             "Version": "2008-10-17",
@@ -1294,32 +1497,32 @@ Resources:
             ]
         }
       Policies:
-        - PolicyName: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+        - PolicyName: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - SSMECSExecAccess
           PolicyDocument:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
                 Action:
-                  - 'ssmmessages:CreateControlChannel'
-                  - 'ssmmessages:CreateDataChannel'
-                  - 'ssmmessages:OpenControlChannel'
-                  - 'ssmmessages:OpenDataChannel'
-                Resource: '*'
+                  - "ssmmessages:CreateControlChannel"
+                  - "ssmmessages:CreateDataChannel"
+                  - "ssmmessages:OpenControlChannel"
+                  - "ssmmessages:OpenDataChannel"
+                Resource: "*"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: c49abe89-ab10-4ea8-b998-b189d7827031
   IAMREXEC:
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
-      RoleName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      RoleName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - EcsTaskExecutionRole
       ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
       AssumeRolePolicyDocument: |
         {
             "Version": "2008-10-17",
@@ -1335,17 +1538,17 @@ Resources:
             ]
         }
       Policies:
-        - PolicyName: !Join 
-            - '-'
-            - - !Ref 'AWS::StackName'
+        - PolicyName: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
               - SSMAccessForIPFS
           PolicyDocument:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
                 Action:
-                  - 'ssm:GetParameters'
-                  - 'secretsmanager:GetSecretValue'
+                  - "ssm:GetParameters"
+                  - "secretsmanager:GetSecretValue"
                 Resource:
                   - !Sub >-
                     arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}-CLUSTER_ID
@@ -1355,50 +1558,54 @@ Resources:
                     arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}-CLUSTER_SECRET
                   - !Sub >-
                     arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}-CLUSTER_RESTAPI_BASICAUTHCREDENTIALS
+                  - !Sub >-
+                    arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ClusterAWSKey}
+                  - !Sub >-
+                    arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ClusterAWSSecret}
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 135473e6-47b3-4a99-b7f6-67991742f3d2
   LLG1:
-    Type: 'AWS::Logs::LogGroup'
+    Type: "AWS::Logs::LogGroup"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 3e683aa3-1887-451d-85b9-7651907125ca
     Properties:
-      LogGroupName: !Join 
-        - ''
+      LogGroupName: !Join
+        - ""
         - - /ecs/
-          - !Ref 'AWS::StackName'
-          - '-ipfs-node-'
+          - !Ref "AWS::StackName"
+          - "-ipfs-node-"
           - !Ref AvailabilityZone1
       RetentionInDays: 30
   LLG2:
-    Type: 'AWS::Logs::LogGroup'
+    Type: "AWS::Logs::LogGroup"
     Properties:
-      LogGroupName: !Join 
-        - ''
+      LogGroupName: !Join
+        - ""
         - - /ecs/
-          - !Ref 'AWS::StackName'
-          - '-ipfs-node-'
+          - !Ref "AWS::StackName"
+          - "-ipfs-node-"
           - !Ref AvailabilityZone2
       RetentionInDays: 30
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 72f724db-2ef1-4a99-a931-bf5ac460184b
   LLG3:
-    Type: 'AWS::Logs::LogGroup'
+    Type: "AWS::Logs::LogGroup"
     Properties:
-      LogGroupName: !Join 
-        - ''
+      LogGroupName: !Join
+        - ""
         - - /ecs/
-          - !Ref 'AWS::StackName'
-          - '-ipfs-node-'
+          - !Ref "AWS::StackName"
+          - "-ipfs-node-"
           - !Ref AvailabilityZone3
       RetentionInDays: 30
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 5e8d1a50-4a53-444d-a05a-25a515cf77ca
   ELBV2LISTENERWEB:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
       Port: 80
       Protocol: HTTP
@@ -1407,28 +1614,28 @@ Resources:
         - TargetGroupArn: !Ref ELBV2TGIPFSPEERSWEB
           Type: forward
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: dca3f21d-5c1b-485e-9743-f6bb7986ecc6
   ELBV2TGIPFSPEERSWEB:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Properties:
       VpcId: !Ref VPCId
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
-          - ipfs-nodes-web
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
+          - nodes-web
       TargetType: ip
       Protocol: HTTP
       Port: 8080
       HealthCheckEnabled: true
       HealthCheckPath: /ipfs/QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn
       Matcher:
-        HttpCode: '200,301,302,303,304,307,308'
+        HttpCode: "200,301,302,303,304,307,308"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: c18e419c-3319-4614-b794-a4a4cdc17a8a
   ELBV2LISTENERAPI:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
       Port: 9094
       Protocol: HTTP
@@ -1437,28 +1644,28 @@ Resources:
         - TargetGroupArn: !Ref ELBV2TGIPFSPEERSAPI
           Type: forward
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 97a525c6-c9c5-47f6-9513-d0e2570213ca
   ELBV2TGIPFSPEERSAPI:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Properties:
       VpcId: !Ref VPCId
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
-          - ipfs-nodes-api
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
+          - nodes-api
       TargetType: ip
       Protocol: HTTP
       Port: 9094
       HealthCheckEnabled: true
       HealthCheckPath: /id
       Matcher:
-        HttpCode: '401'
+        HttpCode: "401"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 6d88d68a-4e0d-405f-85fe-064f77290493
   CFDAPI:
-    Type: 'AWS::CloudFront::Distribution'
+    Type: "AWS::CloudFront::Distribution"
     Properties:
       DistributionConfig:
         Enabled: true
@@ -1468,9 +1675,9 @@ Resources:
             CustomOriginConfig:
               HTTPPort: 9094
               OriginProtocolPolicy: http-only
-        Comment: !Join 
-          - ' - '
-          - - !Ref 'AWS::StackName'
+        Comment: !Join
+          - " - "
+          - - !Ref "AWS::StackName"
             - CDN Distribution for IPFS Cluster REST API
         DefaultCacheBehavior:
           TargetOriginId: ipfs
@@ -1487,10 +1694,10 @@ Resources:
             - POST
             - DELETE
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: acc5177a-0771-4cd6-9c2c-dfa154db94db
   CFDWEB:
-    Type: 'AWS::CloudFront::Distribution'
+    Type: "AWS::CloudFront::Distribution"
     Properties:
       DistributionConfig:
         Enabled: true
@@ -1500,9 +1707,9 @@ Resources:
             CustomOriginConfig:
               HTTPPort: 80
               OriginProtocolPolicy: http-only
-        Comment: !Join 
-          - ' - '
-          - - !Ref 'AWS::StackName'
+        Comment: !Join
+          - " - "
+          - - !Ref "AWS::StackName"
             - CDN Distribution for IPFS Gateway
         DefaultCacheBehavior:
           TargetOriginId: ipfs
@@ -1510,18 +1717,18 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
           CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 1464327f-a66b-498d-b00c-85f903dfb532
   EC2SGALB:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       VpcId: !Ref VPCId
       GroupDescription: >-
         ALB Inbound/Outbound rules for IPFS Cluster REST API and
         Inbound/Outbound rules for IPFS Gateways
-      GroupName: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      GroupName: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs
       SecurityGroupEgress:
         - CidrIp: !Ref CidrBlock
@@ -1553,15 +1760,15 @@ Resources:
             Cloudfront subnets managed by Prefix Lists (See VPC Console -
             Managed prefix lists)
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 5ada6f09-665d-4af0-a7ce-4c796dc8b68e
   ELBV2ALB:
-    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
       IpAddressType: ipv4
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - ipfs-alb
       Type: application
       Scheme: internet-facing
@@ -1572,155 +1779,66 @@ Resources:
       SecurityGroups:
         - !Ref EC2SGALB
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 2a6c8cb7-817c-4935-b6cc-9b2a9ce14488
   SSMPCLUSTERID:
-    Type: 'AWS::SSM::Parameter'
+    Type: "AWS::SSM::Parameter"
     Properties:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - CLUSTER_ID
       Type: String
       Value: !Ref ClusterId
       Description: CLUSTER_ID of our ipfs cluster
-      AllowedPattern: '^.{52}$'
+      AllowedPattern: "^.{52}$"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 4861969f-0fd7-456b-afa5-e1123bb0a387
   SSMPCLUSTERPRIVATEKEY:
-    Type: 'AWS::SSM::Parameter'
+    Type: "AWS::SSM::Parameter"
     Properties:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - CLUSTER_PRIVATE_KEY
       Type: String
       Value: !Ref ClusterPrivateKey
       Description: CLUSTER_PRIVATE_KEY of our ipfs cluster
-      AllowedPattern: '^.{92}$'
+      AllowedPattern: "^.{92}$"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: ff6c6a0e-8138-4403-b6f9-dfa40d658057
   SSMPCLUSTERSECRET:
-    Type: 'AWS::SSM::Parameter'
+    Type: "AWS::SSM::Parameter"
     Properties:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - CLUSTER_SECRET
       Type: String
       Value: !Ref ClusterSecret
       Description: CLUSTER_SECRET of our ipfs cluster
-      AllowedPattern: '^.{64}$'
+      AllowedPattern: "^.{64}$"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 449b90d1-f252-4e80-9808-4aaa64de8f87
   SSMPCLUSTERBASICAUTH:
-    Type: 'AWS::SSM::Parameter'
+    Type: "AWS::SSM::Parameter"
     Properties:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - CLUSTER_RESTAPI_BASICAUTHCREDENTIALS
       Type: String
       Value: !Ref ClusterRESTAPIBasicAuthCredentials
       Description: >-
         CLUSTER REST API BasicAuth Credentials to authenticate when access IPFS
         Cluster
-      AllowedPattern: '^.+:.+$'
+      AllowedPattern: "^.+:.+$"
     Metadata:
-      'AWS::CloudFormation::Designer':
+      "AWS::CloudFormation::Designer":
         id: 4b4e7a59-95c9-47ba-93c9-d1764b5359b0
-Parameters:
-  VPCId:
-    Type: 'AWS::EC2::VPC::Id'
-    Description: The ID of the VPC to use to deploy this IPFS stack into
-  CidrBlock:
-    AllowedPattern: '((\d{1,3})\.){3}\d{1,3}/\d{1,2}'
-    Description: "VPC CIDR Block. In your VPC console, find the 'IPv4 CIDR' block associated with it. (e.g: 172.31.0.0/16 or 10.0.0.0/16 or any valid CIDR)"
-    Type: String
-  AvailabilityZone1:
-    Type: 'AWS::EC2::AvailabilityZone::Name'
-    Description: Availability zone 1 where the first node will be deployed to
-  PublicSubnet1:
-    Type: 'AWS::EC2::Subnet::Id'
-    Description: Public subnet 1 within the availability zone 1 selected above
-  AvailabilityZone2:
-    Type: 'AWS::EC2::AvailabilityZone::Name'
-    Description: Availability zone 2 where the second node will be deployed to
-  PublicSubnet2:
-    Type: 'AWS::EC2::Subnet::Id'
-    Description: Public subnet 2 within the availability zone 2 selected above
-  AvailabilityZone3:
-    Type: 'AWS::EC2::AvailabilityZone::Name'
-    Description: Availability zone 3 where the third node will be deployed to
-  PublicSubnet3:
-    Type: 'AWS::EC2::Subnet::Id'
-    Description: Public subnet 3 within the availability zone 3 selected above
-  CloudfrontPrefixListId:
-    Type: String
-    MinLength: 1
-    Description: >-
-      Enter the ID of the Prefix List for
-      'com.amazonaws.global.cloudfront.origin-facing' so we can allow only
-      Cloudfront to access our ALB. See AWS VPC Console -> Managed prefix lists.
-  DockerImageIPFS:
-    Type: String
-    MinLength: 1
-    Default: ipfs/kubo
-    AllowedPattern: ^.+$
-    Description: The Docker image to use for IPFS
-  DockerImageIPFSCluster:
-    Type: String
-    MinLength: 1
-    Default: ipfs/ipfs-cluster
-    AllowedPattern: ^.+$
-    Description: The Docker image to use for IPFS Cluster
-  ClusterCrdtTrustedPeers:
-    Type: String
-    MinLength: 1
-    Default: '*'
-    AllowedPattern: ^.+$
-    Description: Trust all peers in the cluster or restict trust to some peers?
-  ClusterIPFSHTTPNodeMutiAddress:
-    Type: String
-    MinLength: 1
-    Default: /ip4/0.0.0.0/tcp/5001
-    AllowedPattern: ^.+$
-    Description: The IP Address of the IPFS API IPFS Cluster can connect to
-  ClusterMonitoringInterval:
-    Type: String
-    MinLength: 2
-    Default: 2s
-    AllowedPattern: ^.+$
-    Description: How fast you want new peers to be detected
-  ClusterRESTAPIBasicAuthCredentials:
-    Type: String
-    MinLength: 3
-    AllowedPattern: '^.+:.+$'
-    Description: 'The login:password combination needed to secure the IPFS Cluster API'
-  ClusterRESTAPIHTTPListenMultiAddress:
-    Type: String
-    MinLength: 1
-    Default: /ip4/0.0.0.0/tcp/9094
-    AllowedPattern: ^.+$
-    Description: Enter the ip/port IPFS Cluster HTTP API will listen on
-  ClusterId:
-    Type: String
-    MinLength: 52
-    AllowedPattern: '^.{52}$'
-    Description: Provide the ID of your main IPFS Cluster node
-  ClusterPrivateKey:
-    Type: String
-    MinLength: 92
-    AllowedPattern: '^.{92}$'
-    Description: Provide the PRIVATE KEY of your main IPFS Cluster node
-  ClusterSecret:
-    Type: String
-    MinLength: 64
-    AllowedPattern: '^.{64}$'
-    Description: The SECRET to share amongst all IPFS CLuster nodes to restrict access
 Outputs:
   CFDWEB:
     Description: >-
@@ -1728,9 +1846,9 @@ Outputs:
       access IPFS files over HTTPS.
     Value: !GetAtt CFDWEB.DomainName
     Export:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - IpfsGatewayDNS
   CFDAPI:
     Description: >-
@@ -1738,7 +1856,7 @@ Outputs:
       name to access IPFS Cluster REST API over HTTPS.
     Value: !GetAtt CFDAPI.DomainName
     Export:
-      Name: !Join 
-        - '-'
-        - - !Ref 'AWS::StackName'
+      Name: !Join
+        - "-"
+        - - !Ref "AWS::StackName"
           - IpfsClusterRESTApiDNS
