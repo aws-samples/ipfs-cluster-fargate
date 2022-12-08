@@ -575,8 +575,8 @@ Parameters:
     AllowedValues:
       - elastic
       - bursting
-    Default: elastic
-    Description: "'bursting' is ok if you use the S3 plugin for datastore. If you use EFS for datastore use 'elastic'. See: https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+    Default: bursting
+    Description: "'bursting' is good if you use S3 as datastore or for small clusters. You may experience slowness with 'bursting' after sustained use. 'elastic' provides high performances but is much more expensive. See: https://docs.aws.amazon.com/efs/latest/ug/performance.html"
     Type: String
 Conditions:
   HasAWSKey: !Not
