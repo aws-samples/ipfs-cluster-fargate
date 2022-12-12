@@ -563,7 +563,6 @@ Parameters:
   ClusterS3Bucket:
     Type: String
     MaxLength: 63
-    Default: ipfs-cluster-blockstore
     Description: Optional. Can be used to reference a S3 bucket if you want to use the S3 plugin (https://github.com/ipfs/go-ds-s3)
   ClusterAWSKey:
     Type: String
