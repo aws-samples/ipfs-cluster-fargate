@@ -16,7 +16,7 @@ jq ".Swarm.ResourceMgr.Limits.System = {
     FD: 1024, 
     Conns: 1024, 
     ConnsInbound: 256, 
-    ConnsOutboun: 1024, 
+    ConnsOutbound: 1024, 
     Streams: 16384, 
     StreamsInbound: 4096, 
     StreamsOutbound: 16384 
