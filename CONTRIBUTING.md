@@ -24,21 +24,91 @@ reported the issue. Please try to include as much information as you can. Detail
 Contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
 
 1. You are working against the latest source on the *main* branch.
-2. You check existing open, and recently merged, pull requests to make sure someone else hasn't addressed the problem already.
-3. You open an issue to discuss any significant work - we would hate for your time to be wasted.
+1. You check existing open, and recently merged, pull requests to make sure someone else hasn't addressed the problem already.
+1. You open an issue to discuss any significant work - we would hate for your time to be wasted.
 
 To send us a pull request, please:
 
-1. Fork the repository.
-2. Modify the source; please focus on the specific change you are contributing. If you also reformat all the code, it will be hard for us to focus on your change.
-3. Ensure local tests pass.
-4. Commit to your fork using clear commit messages.
-5. Send us a pull request, answering any default questions in the pull request interface.
-6. Pay attention to any automated CI failures reported in the pull request, and stay involved in the conversation.
+### Fork and Clond the repository
 
-GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/) and
-[creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
+[Fork and Clone](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) the ipfs-cluster-fargate repo.
 
+1. Fork the original ipfs-cluster-fargate repo to create a copy of the repo in your own GitHub account: https://github.com/aws-samples/ipfs-cluster-fargate
+1. Clone your copy of the repo to download it locally: `git clone https://github.com/{your-github-username}/ipfs-cluster-fargate.git`
+1. Change into the new local directory: `cd ipfs-cluster-fargate`
+1. Add the original ipfs-cluster-fargate repo as another remote repo called "upstream": `git remote add upstream https://github.com/aws-samples/ipfs-cluster-fargate`
+1. For verification, display the remote repos: `git remote -v`
+
+    The output should look like this:
+
+    ```
+	origin  https://github.com/{your-github-username}/ipfs-cluster-fargate.git (fetch)
+	origin  https://github.com/{your-github-username}/ipfs-cluster-fargate.git (push)
+	upstream        https://github.com/aws-samples/ipfs-cluster-fargate (fetch)
+	upstream        https://github.com/aws-samples/ipfs-cluster-fargate (push)
+    ```
+
+GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/)
+
+### Create Branch
+
+Create a new local branch for modification being made. This allows you to create separate pull requests in the upstream repo.
+
+1. Create and checkout a new local branch before making code changes: `git checkout -b {branch-name}`
+    
+1. For verification, display all branches: `git branch -a`
+
+    The output should look like this:
+
+    ```
+    * {branch-name}
+    main
+    remotes/origin/HEAD → origin/main
+    remotes/origin/main
+    ```
+
+### Your Code
+
+Now is the time to modify existing code.
+
+1. When your code is complete, stage the changes to your local branch: `git add .`
+1. Commit the changes to your local branch: `git commit -m 'Comment here'`
+
+
+### Pull Request
+
+Push your code to the remote repos and [create a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+1. Push the local branch to the remote origin repo: `git push origin {branch-name}`
+
+2. Go to the [upstream repo](https://github.com/aws-samples/ipfs-cluster-fargate) in Github and click "Compare & pull request".
+    1. Enter an appropriate title
+    2. Add a description of the changes. Make sure you associate the request with issue number.
+    3. Click "Create pull request".
+
+
+3. Stay involved in the conversation.
+
+GitHub provides additional document on [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
+
+
+### Sync Repos
+
+After your pull request has been accepted into the upstream repo:
+
+1. Switch to your local main branch: `git checkout main`
+1. Pull changes that occurred in the upstream repo: `git fetch upstream`
+1. Merge the upstream main branch with your local main branch: `git merge upstream/main main`
+1. Push changes from you local repo to the remote origin repo: `git push origin main`
+
+### Delete Branches
+
+Delete any unnecessary local and origin branches.
+
+1. Switch to your local main branch: `git checkout main`
+1. For verification, display all branches: `git branch -a`
+1. Delete any unnecessary local branches: `git branch -d {branch-name}`
+1. Delete any unnecessary remote origin branches: `git push origin --delete {branch-name}`
 
 ## Finding contributions to work on
 Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
