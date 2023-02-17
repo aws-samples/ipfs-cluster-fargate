@@ -149,7 +149,7 @@ Get $IpfsClusterEndpoint from CDK output.
 
 ```
 export REST_API_DNS_ENDPOINT=$IpfsClusterEndpoint
-export SECRET=221813dc706c2d1baaf0a15a8710e3c5e2072783c49d214243540044f21a7315
+export CLUSTER_SECRET=221813dc706c2d1baaf0a15a8710e3c5e2072783c49d214243540044f21a7315
 export CLUSTER_RESTAPI_BASICAUTHCREDENTIALS=admin:p@ssw0rd
 ./ipfs-cluster-ctl -l /dns/${REST_API_DNS_ENDPOINT}/tcp/443 \
 --secret ${CLUSTER_SECRET} \
