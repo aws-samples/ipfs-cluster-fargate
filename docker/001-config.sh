@@ -11,16 +11,8 @@ cp ${IPFS_PATH}/config ${IPFS_PATH}/config_bak
 # We also inject the S3 plugin datastore
 # Important: Make sure your fill out the optionnal parameters $CLUSTER_S3_BUCKET, $CLUSTER_AWS_KEY, $CLUSTER_AWS_SECRET in the cloudformation parameters
 cat ${IPFS_PATH}/config_bak | \
-jq ".Swarm.ResourceMgr.Limits.System = { 
-    Memory: 1073741824, 
-    FD: 1024, 
-    Conns: 1024, 
-    ConnsInbound: 256, 
-    ConnsOutbound: 1024, 
-    Streams: 16384, 
-    StreamsInbound: 4096, 
-    StreamsOutbound: 16384 
-}" | \
+jq ".Swarm.ResourceMgr = {}" | \
+jq ".Swarm.ConnMgr = {}" | \
 jq ".Datastore.Spec = { 
     mounts: [
         {
