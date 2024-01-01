@@ -63,6 +63,8 @@ Once the virtualenv is activated, you can install the required dependencies.
 $ pip install -r requirements.txt
 ```
 
+Check the ipfscluster.env file to edit the relevent information like the username:password needed to secure the IPFS Cluster API.
+
 At this point you can now synthesize the CloudFormation template for this code.
 
 ```
@@ -85,7 +87,7 @@ command.
 
 ### Specify Stack Name
 
-The app will retrive stack name from context variable. You can reference [doc](https://docs.aws.amazon.com/cdk/v2/guide/get_context_var.html) for more details. The default stack name is `IpfsClusterFargateStack`. Following is a sample command for specifing stack name while deploy stack via `CDK CLI`.
+The app will retrieve the stack name from the context variable. You can reference [doc](https://docs.aws.amazon.com/cdk/v2/guide/get_context_var.html) for more details. The default stack name is `IpfsClusterFargateStack`. Following is a sample command for specifing stack name while deploy stack via `CDK CLI`.
 
 ```
 cdk deploy -c stack_name=$YOUR_IPFS_CLUSTER_NAME
@@ -112,8 +114,9 @@ Set `EFS_REMOVE_ON_DELETE` to `True` in `ipfscluster.env` will **DELETE** the EF
 
 Set `ECS_EXEC` to `True` in `ipfscluster.env` will **ENABLE** [ECS EXEC](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html) Command for debugging purpose.
 
-### Prepare IPFS Cluster Related Parameter
-__DUE TO SECRET CONCERN__,  parameter will be stored in **Secret Manager** and will not showed up on Cloudformation console and only default value will show up in template. However, you need those paramters to inovke IPFS Cluster API. Plase taking a note on those parameter and keep it safe.
+### Prepare IPFS Cluster Parameters
+
+**For security reasons**, parameters will be stored in **Secret Manager** and will not showed up on Cloudformation console. Only default values will show up in template. However, you need those paramters to invoke IPFS Cluster API. Take note of those parameters and keep them safe.
 
 1. Download [ipfs-cluster-service](https://dist.ipfs.tech/#ipfs-cluster-service)
 2. Execute following command and find `id` and `private_key` in `identity.json`. Find `secret` in `service.json`
@@ -121,10 +124,13 @@ __DUE TO SECRET CONCERN__,  parameter will be stored in **Secret Manager** and w
 ./ipfs-cluster-service -c /tmp/ipfs init 
 ```
 
+## CDK Deploy Command
 
-## Sample CDK Deploy Command
+Export `CDK_DEPLOY_REGION` variable can specify region other than default CDK region for the deployment. 
 
-Export `CDK_DEPLOY_REGION` variable can specify region other than default CDK region for the deployment.
+Make sure you are using the right AWS Credentials to deploy your stack in the right AWS account. 
+
+Replace $YOUR_IPFS_CLUSTER_NAME with the name you want to give to your CloudFormation stack.
 
 ```
 export CDK_DEPLOY_REGION=ap-northeast-3; cdk deploy \
@@ -132,6 +138,7 @@ export CDK_DEPLOY_REGION=ap-northeast-3; cdk deploy \
 --parameters ClusterSecret=221813dc706c2d1baaf0a15a8710e3c5e2072783c49d214243540044f21a7315 \
 --parameters ClusterPrivateKey=CAESQGM5s/BsNF06WZ6Kzn4uAnPGsgXo6Ir3hmcW981bo8v57Jj0nPJGTB86m95dygxailhiWgVEB0qf+N8Nd7ozaxM= \
 --parameters ClusterCredential=admin:p@ssw0rd
+-c stack_name=$YOUR_IPFS_CLUSTER_NAME
 ```
 
 Output
@@ -140,7 +147,6 @@ Outputs:
 IpfsClusterFargateStack.IpfsClusterEndpoint = dg2xxxxxxxxxx.cloudfront.net
 IpfsClusterFargateStack.IpfsGatewayEndpoint = d2xxxxxxxxxxx.cloudfront.net
 ```
-
 
 ### List all IPFS peers
 
@@ -205,5 +211,5 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 
 ## License
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+This architecture definition and related codes are licensed under the MIT-0 License. See the LICENSE file.
 
