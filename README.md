@@ -1,6 +1,6 @@
-<img src="https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg" width="400">
-
-[IPFS Cluster](https://ipfscluster.io/)
+<p align="center">
+<img src="https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg" width="200">
+</p>
 
 # Welcome to CDK Python project for IPFS Cluster on ECS Fargate!
 
