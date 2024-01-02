@@ -1,3 +1,7 @@
+![IPFS CLUSTER](https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg)
+
+[IPFS Cluster](https://ipfscluster.io/)
+
 # Welcome to CDK Python project for IPFS Cluster on ECS Fargate!
 
 A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
