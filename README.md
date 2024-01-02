@@ -1,4 +1,4 @@
-![IPFS CLUSTER](https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg)
+<img src="https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg" width="400">
 
 [IPFS Cluster](https://ipfscluster.io/)
 
