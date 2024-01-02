@@ -2,11 +2,26 @@
 
 A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
 
+## IMPORTANT
+
+The default CDK stack will deploy and run the default `ipfs/kubo:latest` and `ipfs/ipfs-cluster:latest` Docker images.
+
+If killed, the IPFS daemon leaves a `repo.lock` file that will prevent the restart of the Fargate task.
+
+Running your own custom image FROM `ipfs/kubo` is required to fix this issue.
+
+We've created a `Dockerfile_efs` just for that. Use it to build your own image and reference it in your CloudFormation stack.
+
+_Note_: `Dockerfile_s3` is also available to build a Docker image that sets up IPFS to use S3 as storage layer. Using S3 as storage is expensive! IPFS is chatty and makes a LOT of S3 GET requests which are paid for.
+
 ## Architecture
+
 ### IPFS cluster with EFS One Zone Storage Class (Default)
+
 ![IPFS Cluster With EFS One Zone Storage](image/ipfs-cluster-draw.io-OneZoneEFS.drawio.png)
 
 ### IPFS cluster with Standard EFS Storage
+
 For the region contains AZ that does not support One Zone EFS.
 
 Set `ONE_ZONE_EFS=False` in `ipfscluster.env`
@@ -31,9 +46,9 @@ Run `pip install -r requirements.txt` to install all the current dependencies.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
-This project is set up like a standard Python project.  The initialization
+This project is set up like a standard Python project. The initialization
 process also creates a virtualenv within this project, stored under the `.venv`
-directory.  To create the virtualenv it assumes that there is a `python3`
+directory. To create the virtualenv it assumes that there is a `python3`
 (or `python` for Windows) executable in your path with access to the `venv`
 package. If for any reason the automatic creation of the virtualenv fails,
 you can create the virtualenv manually.
@@ -77,11 +92,11 @@ command.
 
 ### Useful commands
 
- * `cdk ls`          list all stacks in the app
- * `cdk synth`       emits the synthesized CloudFormation template
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk docs`        open CDK documentation
+- `cdk ls` list all stacks in the app
+- `cdk synth` emits the synthesized CloudFormation template
+- `cdk deploy` deploy this stack to your default AWS account/region
+- `cdk diff` compare deployed stack with current state
+- `cdk docs` open CDK documentation
 
 ## Deploy the stack
 
@@ -94,6 +109,7 @@ cdk deploy -c stack_name=$YOUR_IPFS_CLUSTER_NAME
 ```
 
 Or you can specify stack name in `cdk.json`
+
 ```
 {
   "context":{
@@ -104,11 +120,11 @@ Or you can specify stack name in `cdk.json`
 }
 ```
 
-### Configure the EFS storage 
+### Configure the EFS storage
 
 Set `ONE_ZONE_EFS` to `True` in `ipfscluster.env` will deploy EFS one zone file system and access poinbt on each AZ
 
-Set `ONE_ZONE_EFS` to `False` in `ipfscluster.env` will deploy EFS   file system cross AZs. EFS access point will be created on each AZ.
+Set `ONE_ZONE_EFS` to `False` in `ipfscluster.env` will deploy EFS file system cross AZs. EFS access point will be created on each AZ.
 
 Set `EFS_REMOVE_ON_DELETE` to `True` in `ipfscluster.env` will **DELETE** the EFS file system while destroying the CDK stack. The defulat behavior is **RETAIN** the EFS file system.
 
@@ -120,15 +136,16 @@ Set `ECS_EXEC` to `True` in `ipfscluster.env` will **ENABLE** [ECS EXEC](https:/
 
 1. Download [ipfs-cluster-service](https://dist.ipfs.tech/#ipfs-cluster-service)
 2. Execute following command and find `id` and `private_key` in `identity.json`. Find `secret` in `service.json`
+
 ```
-./ipfs-cluster-service -c /tmp/ipfs init 
+./ipfs-cluster-service -c /tmp/ipfs init
 ```
 
 ## CDK Deploy Command
 
-Export `CDK_DEPLOY_REGION` variable can specify region other than default CDK region for the deployment. 
+Export `CDK_DEPLOY_REGION` variable can specify region other than default CDK region for the deployment.
 
-Make sure you are using the right AWS Credentials to deploy your stack in the right AWS account. 
+Make sure you are using the right AWS Credentials to deploy your stack in the right AWS account.
 
 Replace $YOUR_IPFS_CLUSTER_NAME with the name you want to give to your CloudFormation stack.
 
@@ -142,6 +159,7 @@ export CDK_DEPLOY_REGION=ap-northeast-3; cdk deploy \
 ```
 
 Output
+
 ```
 Outputs:
 IpfsClusterFargateStack.IpfsClusterEndpoint = dg2xxxxxxxxxx.cloudfront.net
@@ -150,7 +168,7 @@ IpfsClusterFargateStack.IpfsGatewayEndpoint = d2xxxxxxxxxxx.cloudfront.net
 
 ### List all IPFS peers
 
-Download [ipfs-cluster-ctl]( https://dist.ipfs.tech/#ipfs-cluster-ctl)
+Download [ipfs-cluster-ctl](https://dist.ipfs.tech/#ipfs-cluster-ctl)
 Get $IpfsClusterEndpoint from CDK output.
 
 ```
@@ -161,7 +179,9 @@ export CLUSTER_RESTAPI_BASICAUTHCREDENTIALS=admin:p@ssw0rd
 --secret ${CLUSTER_SECRET} \
 --basic-auth ${CLUSTER_RESTAPI_BASICAUTHCREDENTIALS} peers ls
 ```
+
 Example Output:
+
 ```
 12D3KooWRjwfEtpPmnnjkUbwv4mWtWoUdmKemcqwfLNFGPV3P8PC | IpfsCluster0 | Sees 2 other peers
   > Addresses:
@@ -184,23 +204,29 @@ Example Output:
 ```
 
 ### Add a file to the IPFS cluster
+
 ```
 ./ipfs-cluster-ctl -l /dns/${REST_API_DNS_ENDPOINT}/tcp/443 \
 --secret ${CLUSTER_SECRET} \
 --basic-auth ${CLUSTER_RESTAPI_BASICAUTHCREDENTIALS} add $PATH_TO_FILE
 ```
+
 Output
+
 ```
 added Qmc9CzkoBMoPGXt78mGcE9SAXcTnvttR8UNNXXXXXXXXXX $FILENAME
 ```
 
 ### Get the IPFS file via public gateway
+
 ```
 curl https://ipfs.io/ipfs/$CID --output $PATH_TO_SAVE
 ```
 
 ### Get the IPFS file via IPFS Cluster gateway (Cloudfront Distribution)
+
 Get $IpfsGatewayEndpoint from CDK output
+
 ```
 curl https://$IpfsGatewayEndpoint/ipfs/$CID --output $PATH_TO_SAVE
 ```
@@ -212,4 +238,3 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 ## License
 
 This architecture definition and related codes are licensed under the MIT-0 License. See the LICENSE file.
-
