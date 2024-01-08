@@ -1268,7 +1268,7 @@ Resources:
       TaskDefinition: !Ref ECSTD1
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 10
+      HealthCheckGracePeriodSeconds: 60
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
@@ -1329,7 +1329,7 @@ Resources:
       TaskDefinition: !Ref ECSTD2
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 10
+      HealthCheckGracePeriodSeconds: 60
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
@@ -1397,7 +1397,7 @@ Resources:
       TaskDefinition: !Ref ECSTD3
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 10
+      HealthCheckGracePeriodSeconds: 60
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
