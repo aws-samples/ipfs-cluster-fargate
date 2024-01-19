@@ -1,14 +1,10 @@
 FROM ipfs/kubo:latest
 
-COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
+# Previous attempt to cleanup temporary files at startup
+# See file for more information
+# COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
-# USER ipfs
-
-#ENTRYPOINT ["/bin/sh", "-c" , "echo 'go clean lock' && ls -la /data/ipfs/repo.lock && rm -rf /data/ipfs/repo.lock /data/ipfs/datastore/LOCK /data/ipfs/blocks/.temp && echo 'post clean' && ls -la /data/ipfs/repo.lock && /sbin/tini -- /usr/local/bin/start daemon --migrate=true --agent-version-suffix=docker"]
-
-# init.d script IPFS runs before starting the daemon. Used to manipulate the IPFS config file.
-# COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
+ENTRYPOINT ["tini", "--", "/entrypoint.sh"]

@@ -1268,7 +1268,7 @@ Resources:
       TaskDefinition: !Ref ECSTD1
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 60
+      HealthCheckGracePeriodSeconds: 600
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
@@ -1329,7 +1329,7 @@ Resources:
       TaskDefinition: !Ref ECSTD2
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 60
+      HealthCheckGracePeriodSeconds: 600
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
@@ -1397,7 +1397,7 @@ Resources:
       TaskDefinition: !Ref ECSTD3
       DesiredCount: 1
       EnableExecuteCommand: true
-      HealthCheckGracePeriodSeconds: 60
+      HealthCheckGracePeriodSeconds: 600
       CapacityProviderStrategy:
         - Base: 1
           CapacityProvider: FARGATE
@@ -1658,6 +1658,10 @@ Resources:
       Port: 9094
       HealthCheckEnabled: true
       HealthCheckPath: /id
+      UnhealthyThresholdCount: 1
+      HealthyThresholdCount: 1
+      HealthCheckTimeoutSeconds: 10
+      HealthCheckIntervalSeconds: 30
       Matcher:
         HttpCode: "401"
     Metadata:

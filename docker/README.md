@@ -19,6 +19,15 @@ cd docker
 docker build -t my-ipfs-image .
 ```
 
+Build, tag and push Docker image for AMD64 architecture to AWS ECR
+Useful to build AMD64 on ARM based CPUs
+
+```
+docker buildx build --no-cache --platform linux/amd64 -t ipfs-efs -f Dockerfile_efs .
+docker tag ipfs-efs:latest public.ecr.aws/k1j0v0i7/ipfs-efs
+docker push public.ecr.aws/k1j0v0i7/ipfs-efs
+```
+
 ## Running a container
 
 ```
@@ -36,4 +45,3 @@ CLUSTER_PEERNAME=<node_name>
 CLUSTER_AWS_KEY=<aws_key>
 CLUSTER_AWS_SECRET=<aws_secret>
 ```
-

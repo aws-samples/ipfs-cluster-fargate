@@ -136,6 +136,10 @@ class IpfsClusterFargateStack(Stack):
                 enabled=True,
                 path='/id',
                 healthy_http_codes='401',
+                healthy_threshold_count=1,
+                unhealthy_threshold_count=1,
+                interval=Duration.seconds(30),
+                timeout=Duration.seconds(10)
             ),
             vpc=_vpc
         )
@@ -402,7 +406,7 @@ class IpfsClusterFargateStack(Stack):
                         cloud_map_namespace=_private_namespace,
                         # Create A records - useful for AWSVPC network mode.
                         dns_record_type=cloudmap.DnsRecordType.A,
-                        dns_ttl=Duration.seconds(60),
+                        dns_ttl=Duration.seconds(600),
                         # name='IpfsSrv'+str(i)
                 ),
                     max_healthy_percent=100,
