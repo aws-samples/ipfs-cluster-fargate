@@ -2,9 +2,9 @@ FROM ipfs/kubo:latest
 
 # Previous attempt to cleanup temporary files at startup
 # See file for more information
-# COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
+COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

@@ -21,6 +21,7 @@ Metadata:
         Parameters:
           - DockerImageIPFS
           - EFSThroughputMode
+          - EFSProvisionedThroughputInMibps
       - Label:
           default: IPFS S3 Plugin configuration (optional)
         Parameters:
@@ -86,6 +87,8 @@ Metadata:
         default: CLUSTER_AWS_SECRET secret environment variable
       EFSThroughputMode:
         default: EFS Throughput mode
+      EFSProvisionedThroughputInMibps:
+        default: "EFS throughput, measured in mebibytes per second (MiBps) (1-3414). Required if throughput mode is set to 'provisioned'. Cost=$6/MiBps/Month."
   "AWS::CloudFormation::Designer":
     671e25d7-f5fc-4c88-9412-a439adb3e75c:
       size:
@@ -574,9 +577,16 @@ Parameters:
     AllowedValues:
       - elastic
       - bursting
-    Default: bursting
-    Description: "'bursting' is good if you use S3 as datastore or for small clusters. You may experience slowness with 'bursting' after sustained use. 'elastic' provides high performances but is much more expensive. See: https://docs.aws.amazon.com/efs/latest/ug/performance.html"
+      - provisioned
+    Default: provisioned
+    Description: "'provisioned' is steady and fairly cheap to run and achieve decent performances. 'bursting' is ok if you use S3 as datastore but you may experience slowness with 'bursting' after sustained use. 'elastic' provides high performances but is much more expensive. See: https://docs.aws.amazon.com/efs/latest/ug/performance.html"
     Type: String
+  EFSProvisionedThroughputInMibps:
+    Type: Number
+    Default: 1
+    MinValue: 1
+    MaxValue: 3414
+    Description: Set the EFS throughput for your cluster. Cost=$6/MiBps/Month.
 Conditions:
   HasAWSKey: !Not
     - !Equals
@@ -661,6 +671,7 @@ Resources:
       AvailabilityZoneName: !Ref AvailabilityZone1
       Encrypted: true
       ThroughputMode: !Ref EFSThroughputMode
+      ProvisionedThroughputInMibps: !Ref EFSProvisionedThroughputInMibps
       FileSystemTags:
         - Key: Name
           Value: !Join
@@ -677,6 +688,7 @@ Resources:
       AvailabilityZoneName: !Ref AvailabilityZone2
       Encrypted: true
       ThroughputMode: !Ref EFSThroughputMode
+      ProvisionedThroughputInMibps: !Ref EFSProvisionedThroughputInMibps
       FileSystemTags:
         - Key: Name
           Value: !Join
@@ -693,6 +705,7 @@ Resources:
       AvailabilityZoneName: !Ref AvailabilityZone3
       Encrypted: true
       ThroughputMode: !Ref EFSThroughputMode
+      ProvisionedThroughputInMibps: !Ref EFSProvisionedThroughputInMibps
       FileSystemTags:
         - Key: Name
           Value: !Join
@@ -1331,12 +1344,12 @@ Resources:
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 600
       CapacityProviderStrategy:
-        - Base: 1
-          CapacityProvider: FARGATE
-          Weight: 1
         - Base: 0
-          CapacityProvider: FARGATE_SPOT
+          CapacityProvider: FARGATE
           Weight: 0
+        - Base: 1
+          CapacityProvider: FARGATE_SPOT
+          Weight: 1
       LoadBalancers:
         - ContainerName: ipfs
           ContainerPort: 8080
@@ -1399,12 +1412,12 @@ Resources:
       EnableExecuteCommand: true
       HealthCheckGracePeriodSeconds: 600
       CapacityProviderStrategy:
-        - Base: 1
-          CapacityProvider: FARGATE
-          Weight: 1
         - Base: 0
-          CapacityProvider: FARGATE_SPOT
+          CapacityProvider: FARGATE
           Weight: 0
+        - Base: 1
+          CapacityProvider: FARGATE_SPOT
+          Weight: 1
       LoadBalancers:
         - ContainerName: ipfs
           ContainerPort: 8080
