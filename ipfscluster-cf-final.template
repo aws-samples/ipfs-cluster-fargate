@@ -1658,8 +1658,8 @@ Resources:
       Port: 9094
       HealthCheckEnabled: true
       HealthCheckPath: /id
-      UnhealthyThresholdCount: 1
-      HealthyThresholdCount: 1
+      UnhealthyThresholdCount: 2
+      HealthyThresholdCount: 2
       HealthCheckTimeoutSeconds: 10
       HealthCheckIntervalSeconds: 30
       Matcher:
