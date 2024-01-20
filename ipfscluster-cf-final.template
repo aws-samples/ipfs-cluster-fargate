@@ -510,13 +510,13 @@ Parameters:
   DockerImageIPFS:
     Type: String
     MinLength: 1
-    Default: ipfs/kubo:latest
+    Default: ipfs/kubo:master-latest
     AllowedPattern: ^.+$
     Description: The Docker image to use for IPFS. Reference your own custom Docker image (custom config)
   DockerImageIPFSCluster:
     Type: String
     MinLength: 1
-    Default: ipfs/ipfs-cluster:latest
+    Default: ipfs/ipfs-cluster:master-latest
     AllowedPattern: ^.+$
     Description: The Docker image to use for IPFS Cluster
   ClusterCrdtTrustedPeers:
@@ -729,7 +729,7 @@ Resources:
     DependsOn:
       - EC2SGEFS
       - EFSFS1
-  EFSAP1:
+  EFSAP1IPFS:
     Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
@@ -738,12 +738,38 @@ Resources:
             - "-"
             - - !Ref "AWS::StackName"
               - ipfs
+      PosixUser:
+        Uid: 1000
+        Gid: 100
       RootDirectory:
-        Path: /
+        Path: /IpfsKuboEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
       FileSystemId: !Ref EFSFS1
     Metadata:
       "AWS::CloudFormation::Designer":
         id: 7f4b4927-04f4-4c8c-a0aa-2f3f364af809
+  EFSAP1IPFSCLUSTER:
+    Type: "AWS::EFS::AccessPoint"
+    Properties:
+      AccessPointTags:
+        - Key: Name
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
+              - ipfs-cluster
+      PosixUser:
+        Uid: 1000
+        Gid: 100
+      RootDirectory:
+        Path: /IpfsClusterEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
+      FileSystemId: !Ref EFSFS1
   EFSMT2:
     Type: "AWS::EFS::MountTarget"
     Properties:
@@ -757,7 +783,7 @@ Resources:
     DependsOn:
       - EC2SGEFS
       - EFSFS2
-  EFSAP2:
+  EFSAP2IPFS:
     Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
@@ -766,12 +792,38 @@ Resources:
             - "-"
             - - !Ref "AWS::StackName"
               - ipfs
+      PosixUser:
+        Uid: 1000
+        Gid: 100
       RootDirectory:
-        Path: /
+        Path: /IpfsKuboEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
       FileSystemId: !Ref EFSFS2
     Metadata:
       "AWS::CloudFormation::Designer":
         id: 2b9205ce-42bb-451a-b122-839b73152c1e
+  EFSAP2IPFSCLUSTER:
+    Type: "AWS::EFS::AccessPoint"
+    Properties:
+      AccessPointTags:
+        - Key: Name
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
+              - ipfs-cluster
+      PosixUser:
+        Uid: 1000
+        Gid: 100
+      RootDirectory:
+        Path: /IpfsClusterEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
+      FileSystemId: !Ref EFSFS2
   EFSMT3:
     Type: "AWS::EFS::MountTarget"
     Properties:
@@ -785,7 +837,7 @@ Resources:
     DependsOn:
       - EC2SGEFS
       - EFSFS3
-  EFSAP3:
+  EFSAP3IPFS:
     Type: "AWS::EFS::AccessPoint"
     Properties:
       AccessPointTags:
@@ -794,14 +846,40 @@ Resources:
             - "-"
             - - !Ref "AWS::StackName"
               - ipfs
+      PosixUser:
+        Uid: 1000
+        Gid: 100
       RootDirectory:
-        Path: /
+        Path: /IpfsKuboEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
       FileSystemId: !Ref EFSFS3
     Metadata:
       "AWS::CloudFormation::Designer":
         id: 1c80c63f-1087-4516-b4b3-fadbcf0c2c1e
     DependsOn:
       - EFSFS3
+  EFSAP3IPFSCLUSTER:
+    Type: "AWS::EFS::AccessPoint"
+    Properties:
+      AccessPointTags:
+        - Key: Name
+          Value: !Join
+            - "-"
+            - - !Ref "AWS::StackName"
+              - ipfs-cluster
+      PosixUser:
+        Uid: 1000
+        Gid: 100
+      RootDirectory:
+        Path: /IpfsClusterEfsAp
+        CreationInfo:
+          Permissions: 755
+          OwnerUid: 1000
+          OwnerGid: 100
+      FileSystemId: !Ref EFSFS3
   ECSCIPFS:
     Type: "AWS::ECS::Cluster"
     Properties:
@@ -835,7 +913,14 @@ Resources:
           EFSVolumeConfiguration:
             AuthorizationConfig:
               IAM: DISABLED
-              AccessPointId: !Ref EFSAP1
+              AccessPointId: !Ref EFSAP1IPFS
+            FilesystemId: !Ref EFSFS1
+            TransitEncryption: ENABLED
+        - Name: ipfs-cluster
+          EFSVolumeConfiguration:
+            AuthorizationConfig:
+              IAM: DISABLED
+              AccessPointId: !Ref EFSAP1IPFSCLUSTER
             FilesystemId: !Ref EFSFS1
             TransitEncryption: ENABLED
       ContainerDefinitions:
@@ -980,7 +1065,14 @@ Resources:
           EFSVolumeConfiguration:
             AuthorizationConfig:
               IAM: DISABLED
-              AccessPointId: !Ref EFSAP2
+              AccessPointId: !Ref EFSAP2IPFS
+            FilesystemId: !Ref EFSFS2
+            TransitEncryption: ENABLED
+        - Name: ipfs-cluster
+          EFSVolumeConfiguration:
+            AuthorizationConfig:
+              IAM: DISABLED
+              AccessPointId: !Ref EFSAP2IPFSCLUSTER
             FilesystemId: !Ref EFSFS2
             TransitEncryption: ENABLED
       ContainerDefinitions:
@@ -1136,7 +1228,14 @@ Resources:
           EFSVolumeConfiguration:
             AuthorizationConfig:
               IAM: DISABLED
-              AccessPointId: !Ref EFSAP3
+              AccessPointId: !Ref EFSAP3IPFS
+            FilesystemId: !Ref EFSFS3
+            TransitEncryption: ENABLED
+        - Name: ipfs-cluster
+          EFSVolumeConfiguration:
+            AuthorizationConfig:
+              IAM: DISABLED
+              AccessPointId: !Ref EFSAP3IPFSCLUSTER
             FilesystemId: !Ref EFSFS3
             TransitEncryption: ENABLED
       ContainerDefinitions:
@@ -1314,7 +1413,8 @@ Resources:
     DependsOn:
       - EFSMT1
       - ELBV2LISTENERWEB
-      - EFSAP1
+      - EFSAP1IPFS
+      - EFSAP1IPFSCLUSTER
       - EFSFS1
       - ELBV2LISTENERAPI
   SDPDN:
@@ -1376,7 +1476,8 @@ Resources:
       - EFSMT2
       - ELBV2LISTENERWEB
       - ECSS1
-      - EFSAP2
+      - EFSAP2IPFS
+      - EFSAP2IPFSCLUSTER
       - EFSFS2
       - ELBV2LISTENERAPI
   SDS1:
@@ -1444,7 +1545,8 @@ Resources:
       - EFSMT3
       - ELBV2LISTENERWEB
       - ECSS1
-      - EFSAP3
+      - EFSAP3IPFS
+      - EFSAP3IPFSCLUSTER
       - EFSFS3
       - ELBV2LISTENERAPI
   SDS3:
@@ -1670,13 +1772,13 @@ Resources:
       Protocol: HTTP
       Port: 9094
       HealthCheckEnabled: true
-      HealthCheckPath: /id
+      HealthCheckPath: /health
       UnhealthyThresholdCount: 2
       HealthyThresholdCount: 2
       HealthCheckTimeoutSeconds: 10
       HealthCheckIntervalSeconds: 30
       Matcher:
-        HttpCode: "401"
+        HttpCode: "204"
     Metadata:
       "AWS::CloudFormation::Designer":
         id: 6d88d68a-4e0d-405f-85fe-064f77290493

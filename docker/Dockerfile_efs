@@ -1,9 +1,11 @@
-FROM ipfs/kubo:latest
+FROM ipfs/kubo:master-latest
 
 # Attempt to cleanup temporary files at startup using IPFS startup logic
 COPY 001-config_efs.sh /container-init.d/001-config_efs.sh
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+USER ipfs
 
 ENTRYPOINT ["/entrypoint.sh"]

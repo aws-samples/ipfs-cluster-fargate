@@ -134,8 +134,8 @@ class IpfsClusterFargateStack(Stack):
             protocol=elbv2.ApplicationProtocol.HTTP,
             health_check=elbv2.HealthCheck(
                 enabled=True,
-                path='/id',
-                healthy_http_codes='401',
+                path='/health',
+                healthy_http_codes='204',
                 healthy_threshold_count=2,
                 unhealthy_threshold_count=2,
                 interval=Duration.seconds(30),
@@ -416,7 +416,7 @@ class IpfsClusterFargateStack(Stack):
                 # Add kubo container
                 _kubo_container = _task.add_container(
                     'IpfsKuboNode'+str(i),
-                    image=ecs.ContainerImage.from_registry('ipfs/kubo:latest'),
+                    image=ecs.ContainerImage.from_registry('ipfs/kubo:master-latest'),
                     port_mappings=[
                         ecs.PortMapping(container_port=4001),
                         ecs.PortMapping(container_port=5001),
@@ -492,7 +492,7 @@ class IpfsClusterFargateStack(Stack):
                     _ipfs_cluster_container = _task.add_container(
                         _container_name,
                         image=ecs.ContainerImage.from_registry(
-                            'ipfs/ipfs-cluster:latest'
+                            'ipfs/ipfs-cluster:master-latest'
                         ),
                         port_mappings=[
                             ecs.PortMapping(container_port=9096),
