@@ -2,9 +2,11 @@
 <img src="https://ipfscluster.io/cluster/svg/cluster_cube_illustr.svg" width="200">
 </p>
 
-# Welcome to CDK Python project for IPFS Cluster on ECS Fargate!
+# Welcome to IPFS Cluster on ECS Fargate!
 
-A python CDK project to deploy IPFS Cluster on ECS Fargate. Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
+A CloudFormation template (`ipfscluster-cf-final.template`) and a python CDK script to deploy IPFS and IPFS Cluster on ECS Fargate.
+
+Pleare refer to the [AWS Blog](https://aws.amazon.com/blogs/containers/deploying-ipfs-cluster-using-aws-fargate-and-amazon-efs-one-zone/) for more details.
 
 ## IMPORTANT
 
@@ -14,7 +16,7 @@ If killed, the IPFS daemon leaves a `repo.lock` file that will prevent the resta
 
 Running your own custom image FROM `ipfs/kubo` is required to fix this issue.
 
-We've created a `Dockerfile_efs` just for that. Use it to build your own image and reference it in your CloudFormation stack.
+We've created a `Dockerfile_efs` just for that. Use it to build your own Docker image and reference it in your CloudFormation or CDK stack.
 
 _Note_: `Dockerfile_s3` is also available to build a Docker image that sets up IPFS to use S3 as storage layer. Using S3 as storage is expensive! IPFS is chatty and makes a LOT of S3 GET requests which are paid for.
 
@@ -22,7 +24,7 @@ _Note_: `Dockerfile_s3` is also available to build a Docker image that sets up I
 
 ### IPFS cluster with EFS One Zone Storage Class (Default)
 
-![IPFS Cluster With EFS One Zone Storage](image/ipfs-cluster-draw.io-OneZoneEFS.drawio.png)
+![IPFS Cluster With EFS One Zone Storage](images/ipfs-cluster-draw.io-OneZoneEFS.drawio.png)
 
 ### IPFS cluster with Standard EFS Storage
 
@@ -30,7 +32,7 @@ For the region contains AZ that does not support One Zone EFS.
 
 Set `ONE_ZONE_EFS=False` in `ipfscluster.env`
 
-![IPFS Cluster With EFS Standard Storage](image/ipfs-cluster-draw.io-StandardEFS.drawio.png)
+![IPFS Cluster With EFS Standard Storage](images/ipfs-cluster-draw.io-StandardEFS.drawio.png)
 
 ## Install CDK
 

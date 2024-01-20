@@ -534,7 +534,7 @@ Parameters:
   ClusterMonitoringInterval:
     Type: String
     MinLength: 2
-    Default: 2s
+    Default: 5s
     AllowedPattern: ^.+$
     Description: How fast you want new peers to be detected
   ClusterRESTAPIBasicAuthCredentials:
