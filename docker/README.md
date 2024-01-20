@@ -1,26 +1,46 @@
-# Dockerfile and script to integrate the go-ds-s3 plugin
+# Dockerfiles to customize ipfs
 
-The Dockerfile builds IPFS and the go-ds-s3 plugin together using the same golang version.
+We have two Dockerfiles that build custom images from the official ipfs:latest Docker image
+
+## Dockerfile: EFS
+
+The `Dockerfile_efs` file provides a customer entrypoint for our Docker container.
+
+The new entrypoints cleans up temporary lock files that IPFS leaves behind.
+
+We also copy the `001-config_efs.sh` shell script to help cleanup the file. You can manipulate IPFS configuration there as well.
+
+## Dockerfile: S3 Plugin
+
+The `Dockerfile_s3` file builds IPFS and the `go-ds-s3` plugin together using the same golang version.
 It copies the relevant files to the final Docker image.
 
-We also copy the `001-config.sh` shell script to manipulate the IPFS config file before startup.
+We also copy the `001-config_s3.sh` shell script to manipulate the IPFS config file before startup.
 
-## Config changes
+### Config changes
 
 The script injects the correct config in the `Datastore.Spec` object to setup the plugin and
 update the `datastore_spec` file to reflect the new datastore configuration.
 
-Edit the `001-config.sh` to fit your use case.
+Edit the `001-config_s3.sh` to fit your use case.
 
-## Building the image
+### IPFS Config changes
+
+The script injects the correct config in the `Datastore.Spec` object to setup the plugin and
+update the `datastore_spec` file to reflect the new datastore configuration.
+
+Edit the `001-config_s3.sh` to fit your use case.
+
+## Building images
+
+Basic build:
 
 ```
 cd docker
-docker build -t my-ipfs-image .
+docker build -t my-ipfs-image -f Dockerfile_s3 .
 ```
 
-Build, tag and push Docker image for AMD64 architecture to AWS ECR
-Useful to build AMD64 on ARM based CPUs
+Build (Useful command to build AMD64 on ARM based CPUs), tag and push a Docker image for AMD64 architecture to a public AWS ECR repository :
 
 ```
 docker buildx build --no-cache --platform linux/amd64 -t ipfs-efs -f Dockerfile_efs .
