@@ -1,6 +1,6 @@
 # Dockerfiles to customize ipfs
 
-We have two Dockerfiles that build custom images from the official ipfs:latest Docker image
+We have two `Dockerfile` that build custom Docker images from the official ipfs:latest Docker image
 
 ## Dockerfile: EFS
 
