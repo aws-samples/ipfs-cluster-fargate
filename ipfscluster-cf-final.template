@@ -36,6 +36,9 @@ Metadata:
           - ClusterIPFSHTTPNodeMutiAddress
           - ClusterMonitoringInterval
           - ClusterRESTAPIHTTPListenMultiAddress
+          - ClusterReplicationFactorMin
+          - ClusterReplicationFactorMax
+          - ClusterPeerAddresses
           - ClusterId
           - ClusterPrivateKey
           - ClusterSecret
@@ -73,6 +76,12 @@ Metadata:
         default: CLUSTER_RESTAPI_BASICAUTHCREDENTIALS secret environment variable
       ClusterRESTAPIHTTPListenMultiAddress:
         default: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS environment variable
+      ClusterReplicationFactorMin:
+        default: CLUSTER_REPLICATIONFACTORMIN environment variable
+      ClusterReplicationFactorMax:
+        default: CLUSTER_REPLICATIONFACTORMAX environment variable
+      ClusterPeerAddresses:
+        default: CLUSTER_PEERADDRESSES environment variable
       ClusterSecret:
         default: CLUSTER_SECRET secret environment variable
       ClusterId:
@@ -548,6 +557,21 @@ Parameters:
     Default: /ip4/0.0.0.0/tcp/9094
     AllowedPattern: ^.+$
     Description: Enter the ip/port IPFS Cluster HTTP API will listen on
+  ClusterReplicationFactorMin:
+    Type: Number
+    MinValue: -1
+    MaxValue: 1000
+    Default: -1
+    Description: Specifies the default minimum number of peers that should be pinning an item. -1 == all.
+  ClusterReplicationFactorMax:
+    Type: Number
+    MinValue: -1
+    MaxValue: 1000
+    Default: -1
+    Description: Specifies the default maximum number of peers that should be pinning an item. -1 == all.
+  ClusterPeerAddresses:
+    Type: String
+    Description: "Full peer multiadresses for peers to connect to on boot (similar to manually added entries to the peerstore file.)"
   ClusterId:
     Type: String
     MinLength: 52
@@ -1005,6 +1029,12 @@ Resources:
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
               Value: !Ref ClusterRESTAPIHTTPListenMultiAddress
+            - Name: CLUSTER_REPLICATIONFACTORMIN
+              Value: !Ref ClusterReplicationFactorMin
+            - Name: CLUSTER_REPLICATIONFACTORMAX
+              Value: !Ref ClusterReplicationFactorMax
+            - Name: CLUSTER_PEERNAME
+              Value: !Ref ClusterPeerAddresses
           PortMappings:
             - ContainerPort: 9094
               HostPort: 9094
@@ -1153,6 +1183,12 @@ Resources:
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
               Value: !Ref ClusterRESTAPIHTTPListenMultiAddress
+            - Name: CLUSTER_REPLICATIONFACTORMIN
+              Value: !Ref ClusterReplicationFactorMin
+            - Name: CLUSTER_REPLICATIONFACTORMAX
+              Value: !Ref ClusterReplicationFactorMax
+            - Name: CLUSTER_PEERNAME
+              Value: !Ref ClusterPeerAddresses
           PortMappings:
             - ContainerPort: 9094
               HostPort: 9094
@@ -1316,6 +1352,12 @@ Resources:
               Value: !Ref ClusterIPFSHTTPNodeMutiAddress
             - Name: CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS
               Value: !Ref ClusterRESTAPIHTTPListenMultiAddress
+            - Name: CLUSTER_REPLICATIONFACTORMIN
+              Value: !Ref ClusterReplicationFactorMin
+            - Name: CLUSTER_REPLICATIONFACTORMAX
+              Value: !Ref ClusterReplicationFactorMax
+            - Name: CLUSTER_PEERNAME
+              Value: !Ref ClusterPeerAddresses
           PortMappings:
             - ContainerPort: 9094
               HostPort: 9094
